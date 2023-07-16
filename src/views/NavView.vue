@@ -39,17 +39,32 @@ let isShow = ref(true)
   </nav>
 </template>
 <style>
-
+nav {
+  border-right: groove var(--lt-color-gray-500);
+  background-color: #595959;
+  //width: 200px;
+  color: #f2f2f2;
+}
+nav a.router-link-exact-active, nav a.router-link-exact-active svg {
+  color: #42b983;
+}
+nav a svg{
+  margin: 5px;
+}
+nav a.router-link-exact-active svg {
+  filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(119%) contrast(119%);
+}
 nav a {
   font-weight: bold;
-  color: #2c3e50;
   padding: 10px;
+  color: #f2f2f2;
+}
+nav a:hover{
+  color: #36c7c7;
+  text-decoration: none;
 }
 
 nav a span {
   display: inline;
 }
-
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
 </style>

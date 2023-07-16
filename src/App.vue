@@ -12,24 +12,6 @@
   min-height: inherit;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-  padding: 10px;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-nav a span{
-  display: inline;
-}
-.svg-inline--fa {
-  display: inline-block;
-  height: 1em;
-  overflow: visible;
-  vertical-align: -0.125em;
-}
 /* Enter and leave animations can use different */
 /* durations and timing functions.              */
 .slide-fade-enter-active {

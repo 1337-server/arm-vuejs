@@ -39,7 +39,7 @@ function refreshJobs(){
   return messageContainer.joblist
 }
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from '@/components/HomeScreenGreeting.vue'
 import axios from "axios";
 
 export default {

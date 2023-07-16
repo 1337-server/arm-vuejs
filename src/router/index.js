@@ -8,62 +8,48 @@ const routes = [
         component: HomeView
     },
     {
-        path: '/about',
-        name: 'about',
+        path: '/History',
+        name: 'History',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-        }
-    },
-    {
-        path: '/history',
-        name: 'history',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/History.vue')
         }
     },
     {
         path: '/view_logs',
         name: 'View logs',
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/ViewLogs.vue')
         }
     },
     {
         path: '/database',
         name: 'View database',
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/Database.vue')
         }
     },
     {
         path: '/arm_settings',
         name: 'arm_settings',
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/Settings.vue')
         }
     },
     {
         path: '/send_to_api',
         name: 'send_to_api',
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/SendToAPI.vue')
         }
     },
     {
         path: '/change_password',
         name: 'change_password',
         component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/TestingView.vue')
-        }
-    },
-    {
-        path: '/welcome',
-        name: 'Welcome',
-        component: function () {
-            return import('../views/HomeView.vue')
+            return import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
         }
     }
 ]

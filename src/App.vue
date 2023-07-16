@@ -45,5 +45,5 @@ nav a span{
 }
 </style>
 <script setup>
-import NavView from "@/NavView.vue";
+import NavView from "@/views/NavView.vue";
 </script>

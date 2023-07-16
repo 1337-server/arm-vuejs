@@ -1,8 +1,8 @@
 <script setup>
-import CloseMenuIcon from './components/icons/CloseMenu.vue'
-import HomeIcon from './components/icons/Home.vue'
-import HistoryIcon from './components/icons/History.vue'
-import DatabaseIcon from './components/icons/Database.vue'
+import CloseMenuIcon from '../components/icons/CloseMenu.vue'
+import HomeIcon from '../components/icons/Home.vue'
+import HistoryIcon from '../components/icons/History.vue'
+import DatabaseIcon from '../components/icons/Database.vue'
 import ArmSettingsIcon from "@/components/icons/ArmSettings.vue";
 import SendToApiIcon from "@/components/icons/SendToApi.vue";
 import ChangePasswordIcon from "@/components/icons/ChangePassword.vue";

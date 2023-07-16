@@ -1,10 +1,10 @@
 <template>
   <tr>
-    <th scope="row" class="text-wrap"><a v-bind:href="'jobdetail?job_id='+ job.job_id">{{
-        job.title
-      }}</a>
+    <th scope="row" class="text-wrap">
+      <a v-bind:href="'jobdetail?job_id='+ job.job_id">{{ job.title }}
+      </a>
     </th>
-    <td>{{ job.start_time.strftime(date_format) }}</td>
+    <td>{{ job.start_time }}</td>
     <td class="hidden">{{ job.start_time }}</td>
     <td>{{ job.job_length }}</td>
     <td class="{{ job.status }}"><img v-bind:src="'/src/assets/img/'+ job.status +'.png'"
@@ -15,10 +15,13 @@
       {{ job.logfile }}</a></td>
   </tr>
 </template>
-<script>
-export default {
-  name: 'HistoryLog'
-}
+<script setup>
+defineProps({
+  job: {
+    type: Object,
+    required: true
+  }
+})
 </script>
 <style>
 /*

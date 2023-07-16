@@ -9,6 +9,7 @@
               <div class="col-sm-12  rounded text-center">
                 <img src="/src/assets/img/arm80.png" alt=""><br/>
                 <strong>Welcome to your Automatic Ripping Machine<br></strong>
+                <h1>{{ message }}</h1>
               </div>
             </div>
             <br>
@@ -27,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <HistoryLog v-bind:joblist="joblist"/>
+                <HistoryLog v-for="job in joblist" :key="job.id" :job="job"/>
                 </tbody>
               </table>
             </div>
@@ -72,7 +73,50 @@ and also iPads specifically.
 
 </style>
 
-<script setup>
+<script>
 import HistoryLog from "@/components/HistoryLog.vue";
-let joblist = {};
+let refreshList;
+let messageContainer;
+let joblist;
+function refreshJobs(){
+  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+  axios
+      .get('http://localhost:8080/json?mode=joblist').then((response) => {
+    console.log(response.data);
+    messageContainer.message = response.status
+    console.log(response.data.results)
+    messageContainer.joblist = response.data.results
+    joblist = JSON.parse(JSON.stringify(messageContainer.joblist))
+    console.log(JSON.parse(JSON.stringify(messageContainer.joblist)));
+  }, (error) => {
+    console.log(error);
+  });
+  //.then(response => (messageContainer.message = response))
+  return messageContainer.joblist
+}
+// @ is an alias to /src
+import axios from "axios";
+
+export default {
+  name: 'History',
+  components: {
+    HistoryLog,
+  },
+  data() {
+    return {
+      message: "Joey doesn’t share food!",
+      joblist: {}
+    };
+  },
+  mounted() {
+    messageContainer = this
+    this.joblist = refreshJobs()
+    this.message="First Loaded"
+    console.log(this.message);
+  },
+  unmounted() {
+    console.log("Clearing timers")
+    clearInterval(refreshList);
+  }
+}
 </script>

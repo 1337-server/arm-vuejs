@@ -27,10 +27,6 @@ import InfoBlock from "@/components/InfoBlock.vue";
 let refreshList;
 let messageContainer;
 let joblist;
-let server;
-let serverutil;
-let hwsupport;
-let returnData;
 function refreshJobs(){
   console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
   axios

@@ -81,7 +81,7 @@ let joblist;
 function refreshJobs(){
   console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
   axios
-      .get('http://localhost:8080/json?mode=joblist').then((response) => {
+      .get('http://192.168.1.127:8887/json?mode=database').then((response) => {
     console.log(response.data);
     messageContainer.message = response.status
     console.log(response.data.results)

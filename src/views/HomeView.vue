@@ -25,7 +25,7 @@ let joblist;
 function refreshJobs(){
   console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
   axios
-      .get('http://localhost:8080/json?mode=joblist').then((response) => {
+      .get('http://192.168.1.127:8887/json?mode=joblist').then((response) => {
     console.log(response.data);
     messageContainer.message = response.status
     console.log(response.data.results)
@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      message: "Joey doesn’t share food!",
+      message: "Joey does’t share food!",
       joblist: {}
     };
   },

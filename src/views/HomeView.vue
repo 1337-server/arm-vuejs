@@ -2,9 +2,9 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine"/>
-    <div class="container-fluid h-100 mx-auto">
+    <div class="container-fluid mx-auto">
 
-    <div class="row h-100 align-items-center">
+    <div class="row align-items-center">
       <div class="col-md-12 mx-auto">
         <div id="joblist" class="card-deck">
           <JobTemplate v-bind:joblist="joblist"/>
@@ -13,50 +13,60 @@
     </div>
     </div>
     <h1>{{ message }}</h1>
+    <InfoBlock v-bind:server="server" v-bind:serverutil="serverutil" v-bind:hwsupport="hwsupport"/>
   </div>
 </template>
 
 <script>
 import JobTemplate from "@/components/jobcards/JobTemplate.vue";
+// @ is an alias to /src
+import HelloWorld from '@/components/HomeScreenGreeting.vue'
+import axios from "axios";
+import InfoBlock from "@/components/InfoBlock.vue";
 
 let refreshList;
 let messageContainer;
 let joblist;
+let server;
+let serverutil;
+let hwsupport;
+let returnData;
 function refreshJobs(){
   console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
   axios
       .get('http://192.168.1.127:8887/json?mode=joblist').then((response) => {
     console.log(response.data);
     messageContainer.message = response.status
-    console.log(response.data.results)
+    messageContainer.server = response.data.server
+    messageContainer.serverutil = response.data.serverutil
+    messageContainer.hwsupport = response.data.hwsupport
     messageContainer.joblist = response.data.results
-    joblist = JSON.parse(JSON.stringify(messageContainer.joblist))
-    console.log(JSON.parse(JSON.stringify(messageContainer.joblist)));
   }, (error) => {
     console.log(error);
   });
       //.then(response => (messageContainer.message = response))
-  return messageContainer.joblist
+  return messageContainer
 }
-// @ is an alias to /src
-import HelloWorld from '@/components/HomeScreenGreeting.vue'
-import axios from "axios";
 
 export default {
   name: 'HomeView',
   components: {
+    InfoBlock,
     JobTemplate,
-    HelloWorld
+    HelloWorld,
   },
   data() {
     return {
       message: "Joey does’t share food!",
-      joblist: {}
+      joblist: {},
+      server: {},
+      serverutil: {},
+      hwsupport: {}
     };
   },
   mounted() {
     messageContainer = this
-    this.joblist = refreshJobs()
+    joblist = refreshJobs()
     this.message="First Loaded"
     console.log(this.message);
     refreshList = setInterval(refreshJobs, 5000)

@@ -19,10 +19,9 @@
 
 <script>
 import JobTemplate from "@/components/jobcards/JobTemplate.vue";
-// @ is an alias to /src
 import HelloWorld from '@/components/HomeScreenGreeting.vue'
-import axios from "axios";
 import InfoBlock from "@/components/InfoBlock.vue";
+import axios from "axios";
 
 let refreshList;
 let messageContainer;

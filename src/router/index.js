@@ -51,6 +51,14 @@ const routes = [
         component: function () {
             return import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
         }
+    },
+    // Now start accordion sections
+    {
+        path: '/help',
+        name: 'Help',
+        component: function () {
+            return import(/* webpackChunkName: "about" */ '../components/arm settings/Help.vue')
+        }
     }
 ]
 const router = createRouter({

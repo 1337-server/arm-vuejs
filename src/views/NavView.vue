@@ -7,8 +7,10 @@ import ArmSettingsIcon from "@/components/icons/ArmSettings.vue";
 import SendToApiIcon from "@/components/icons/SendToApi.vue";
 import ChangePasswordIcon from "@/components/icons/ChangePassword.vue";
 import ViewLogsIcon from "@/components/icons/ViewLogs.vue";
+import NaviAccordionSettings from "@/components/NaviAccordionSettings.vue";
 import { ref } from 'vue'
 let isShow = ref(true)
+let isOpen = ref(false)
 </script>
 <template>
   <nav>
@@ -27,9 +29,12 @@ let isShow = ref(true)
     <router-link to="/database">
       <DatabaseIcon/>
       <span v-show="isShow">Database</span></router-link>
-    <router-link to="/arm_settings">
+    <a @click="isOpen = !isOpen; console.log('Triggered_accordion='+ isOpen);" role="button" class="user-select-none">
       <ArmSettingsIcon/>
-      <span v-show="isShow">Arm Settings</span></router-link>
+      <span v-show="isShow">Arm Settings</span></a>
+    <Transition name="slidedown">
+    <NaviAccordionSettings :isOpen="isOpen" v-show="isOpen" />
+    </Transition>
     <router-link to="/send_to_api">
       <SendToApiIcon/>
       <span v-show="isShow">Send DVD's to API</span></router-link>
@@ -66,5 +71,22 @@ nav a:hover{
 
 nav a span {
   display: inline;
+}
+
+.slidedown-enter-active,
+.slidedown-leave-active {
+  transition: max-height 0.5s ease-in-out;
+}
+
+.slidedown-enter-to,
+.slidedown-leave-from {
+  overflow: hidden;
+  max-height: 1000px;
+}
+
+.slidedown-enter-from,
+.slidedown-leave-to {
+  overflow: hidden;
+  max-height: 0;
 }
 </style>

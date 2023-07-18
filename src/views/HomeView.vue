@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home pb-5">
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine"/>
     <div class="container-fluid mx-auto">

@@ -75,25 +75,8 @@ and also iPads specifically.
 
 <script>
 import HistoryLog from "@/components/HistoryLog.vue";
-let refreshList;
 let messageContainer;
-let joblist;
-function refreshJobs(){
-  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
-  axios
-      .get('http://192.168.1.127:8887/json?mode=database').then((response) => {
-    console.log(response.data);
-    messageContainer.message = response.status
-    console.log(response.data.results)
-    messageContainer.joblist = response.data.results
-    joblist = JSON.parse(JSON.stringify(messageContainer.joblist))
-    console.log(JSON.parse(JSON.stringify(messageContainer.joblist)));
-  }, (error) => {
-    console.log(error);
-  });
-  //.then(response => (messageContainer.message = response))
-  return messageContainer.joblist
-}
+
 // @ is an alias to /src
 import axios from "axios";
 
@@ -104,19 +87,27 @@ export default {
   },
   data() {
     return {
-      message: "Joey doesn’t share food!",
+      message: "Ripping History",
       joblist: {}
     };
   },
-  mounted() {
-    messageContainer = this
-    this.joblist = refreshJobs()
-    this.message="First Loaded"
-    console.log(this.message);
+
+  methods: {
+    async getData() {
+      try {
+        const response = await axios.get(
+            "http://192.168.1.127:8887/json?mode=database"
+        );
+        // JSON responses are automatically parsed.
+        this.joblist = response.data.results;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
-  unmounted() {
-    console.log("Clearing timers")
-    clearInterval(refreshList);
-  }
+
+  created() {
+    this.getData();
+  },
 }
 </script>

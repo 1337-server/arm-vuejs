@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import Database from "@/views/Database.vue";
 import ViewLogs from "@/views/ViewLogs.vue";
 import History from "@/views/History.vue";
-import Settings from "@/views/Settings.vue";
 import SendToAPI from "@/views/SendToAPI.vue";
 import Help from "@/components/arm settings/Help.vue";
 import ChangePassword from "@/views/ChangePassword.vue";
@@ -37,11 +36,6 @@ const routes = [
         path: '/database',
         name: 'View database',
         component: Database
-    },
-    {
-        path: '/arm_settings',
-        name: 'arm_settings',
-        component: Settings
     },
     {
         path: '/send_to_api',

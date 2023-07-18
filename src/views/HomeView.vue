@@ -20,8 +20,8 @@
 <script>
 import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import HelloWorld from '@/components/HomeScreenGreeting.vue'
-import InfoBlock from "@/components/InfoBlock.vue";
 import axios from "axios";
+import InfoBlock from "@/components/InfoBlock.vue";
 
 let refreshList;
 let messageContainer;

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import AppTabs from "@/components/AppTabs.vue";
+import AppTabs from "@/components/NaviTabs.vue";
 
 export default {
   components: {

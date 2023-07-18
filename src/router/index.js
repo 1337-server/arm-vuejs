@@ -1,5 +1,14 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import Database from "@/views/Database.vue";
+import ViewLogs from "@/views/ViewLogs.vue";
+import History from "@/views/History.vue";
+import Settings from "@/views/Settings.vue";
+import SendToAPI from "@/views/SendToAPI.vue";
+import Help from "@/components/arm settings/Help.vue";
+import ChangePassword from "@/views/ChangePassword.vue";
+import GeneralInfo from "@/components/arm settings/GeneralInfo.vue";
+import SystemInfo from "@/components/arm settings/SystemInfo.vue";
 
 const routes = [
     {
@@ -13,52 +22,48 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/History.vue')
-        }
+        component: History
     },
     {
         path: '/view_logs',
         name: 'View logs',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/ViewLogs.vue')
-        }
+        component: ViewLogs
     },
     {
         path: '/database',
         name: 'View database',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/Database.vue')
-        }
+        component: Database
     },
     {
         path: '/arm_settings',
         name: 'arm_settings',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/Settings.vue')
-        }
+        component: Settings
     },
     {
         path: '/send_to_api',
         name: 'send_to_api',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/SendToAPI.vue')
-        }
+        component: SendToAPI
     },
     {
         path: '/change_password',
         name: 'change_password',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../views/ChangePassword.vue')
-        }
+        component: ChangePassword
     },
     // Now start accordion sections
     {
         path: '/help',
         name: 'Help',
-        component: function () {
-            return import(/* webpackChunkName: "about" */ '../components/arm settings/Help.vue')
-        }
+        component: Help
+    },
+    {
+        path: '/general-info',
+        name: 'General info',
+        component: GeneralInfo
+    },
+    {
+        path: '/system-info',
+        name: 'System info',
+        component: SystemInfo
     }
 ]
 const router = createRouter({

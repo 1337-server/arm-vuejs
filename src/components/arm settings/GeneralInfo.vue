@@ -1,6 +1,49 @@
-<script setup>
-
+<script>
 import Drives from "@/components/arm settings/Drives.vue";
+import axios from "axios";
+
+let messageContainer;
+
+function fetchStats() {
+  axios
+      .get('http://192.168.1.127:8887/json?mode=stats').then((response) => {
+    messageContainer.message = response.status
+    console.log(response.data.results)
+    messageContainer.stats = response.data.stats
+    messageContainer.drives = response.data.drives
+  }, (error) => {
+    console.log("Error Getting Stats!");
+    console.log(error);
+  });
+  //.then(response => (messageContainer.message = response))
+  return messageContainer.stats
+}
+
+// @ is an alias to /src
+export default {
+  name: 'GeneralInfo',
+  components: {
+    Drives
+  },
+  data() {
+    return {
+      message: "Stats here",
+      stats: {},
+      drives: {}
+    };
+  },
+  mounted() {
+    messageContainer = this
+    this.stats = fetchStats()
+    this.message = "First Loaded"
+    console.log(this.message);
+    this.$nextTick(() => {
+      this.message =
+          "No data yet....Loading please wait";
+      console.log(this.message);
+    });
+  }
+}
 </script>
 
 <template>
@@ -12,29 +55,33 @@ import Drives from "@/components/arm settings/Drives.vue";
         <div class="card-body col">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Python
-              version: {{ stats['python_version'] }}</li>
+              version: {{ stats.python_version }}
+            </li>
             <li class="list-group-item">A.R.M
-              version: {{ stats['arm_version'] }}</li>
+              version: {{ stats.arm_version }}
+            </li>
             <li class="list-group-item">
               <label class="w-100">Current git version:<br>
-                <input disabled value="{{ stats['git_commit'] }}"
+                <input disabled v-bind:value="stats.git_commit"
                        class="form-control">
               </label></li>
-            <li class="list-group-item">Update Available:
+            <li class="list-group-item">
               <!-- Update A.R.M -->
-              {% if stats['updated'] %}
-              <img src="{{ url_for('static', filename='/img/success.png') }}"
-                   alt="update image" width="20px" height="20px">  You are on the latest version
-              {% else %}
-              <img src="{{ url_for('static', filename='/img/fail.png') }}"
-                   alt="update image" width="20px" height="20px">
-              <form id="updateArm" name="updateArm" method="post" action="">
-                <button title="Update A.R.M Via git"
-                        class="btn btn-primary float-right" type="submit">Update
-                  A.R.M
-                </button>
-              </form>New updates are available!
-              {% endif %}
+              <div v-if="stats.updated">
+                <img src="/src/assets/img/success.png"
+                                             alt="update image" width="20px" height="20px"> You are on the latest
+                version
+              </div>
+              <div v-else>>Update Available:<img src="/src/assets/img/fail.png"
+                               alt="update image" width="20px" height="20px">
+                <form id="updateArm" name="updateArm" method="post" action="">
+                  <button title="Update A.R.M Via git"
+                          class="btn btn-primary float-right" type="submit">Update
+                    A.R.M
+                  </button>
+                </form>
+                New updates are available!
+              </div>
             </li>
             <!-- Rip stats -->
             <li class="list-group-item">Total rips:
@@ -50,7 +97,7 @@ import Drives from "@/components/arm settings/Drives.vue";
       </div>
       <!--Right Card-->
       <div class="card">
-        <Drives/>
+        <Drives v-bind:cddrives="drives"/>
       </div>
     </div>
   </div>

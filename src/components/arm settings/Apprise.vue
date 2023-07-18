@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  {% block apprise %}
   <div class="tab-pane pt-5" id="appriseTab" role="tabpanel" aria-labelledby="apprise-tab">
     <form id="appriseCfg" name="appriseCfg" method="post" action="">
       {% for k, v in apprise_cfg.items() %}
@@ -25,7 +24,6 @@
       </button>
     </form>
   </div>
-  {% endblock %}
 
 </template>
 

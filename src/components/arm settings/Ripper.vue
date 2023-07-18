@@ -1,26 +1,52 @@
-<script setup>
+<script>
+import axios from "axios";
 
+export default {
+  data() {
+    return {
+      liveConfig: [],
+      jsoncomments:[]
+    };
+  },
+
+  methods: {
+    async getData() {
+      try {
+        const response = await axios.get(
+            "http://192.168.1.127:8887/json?mode=get_ripper"
+        );
+        // JSON responses are automatically parsed.
+        this.liveConfig = response.data.cfg;
+        this.jsoncomments = response.data.comments
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  created() {
+    this.getData();
+  },
+};
 </script>
 
 <template>
-  {% block ripper %}
-  <div class="tab-pane pt-5" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+  <div class="tab-pane p-5" id="settings" role="tabpanel" aria-labelledby="settings-tab">
     <form id="ripperSettings" name="ripperSettings" method="post" action="">
       {% for k, v in settings.items() %}
-      <div class="input-group mb-3">
+      <div v-for="(v, k) in liveConfig" key="index" class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="{{ k }}">{{ k }}: </span>
+          <span class="input-group-text" v-bind:id="k">{{ k }}: </span>
         </div>
-        <input type="text" class="form-control" aria-label="{{ k }}" name="{{ k }}"
-               placeholder="{{ v }}" value="{{ v }}" aria-describedby="{{ k }}">
+        <input type="text" class="form-control" v-bind:aria-label="k" v-bind:name="k"
+               v-bind:placeholder="v" v-bind:value="v" v-bind:aria-describedby="k">
         <a class="popovers" onClick='return false;' href=""
-           data-content="{{ jsoncomments[k]| replace("#", "\n") }}" rel="popover"
-        data-placement="top" data-original-title="{{ k }}">
+           v-bind:data-content="jsoncomments[k]" rel="popover"
+        data-placement="top" v-bind:data-original-title="k">
         <img title="More information" src="/src/assets/img/info.png" width="30px"
              height="35px" alt="More Info">
         </a>
       </div>
-      {% endfor %}
       <button id="settings" class="btn btn-secondary btn-lg btn-block" form="ripperSettings"
               type="submit">Submit
       </button>

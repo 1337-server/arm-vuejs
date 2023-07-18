@@ -1,5 +1,31 @@
-<script setup>
+<script>
+import axios from "axios";
 
+export default {
+  data() {
+    return {
+      liveConfig: [],
+    };
+  },
+
+  methods: {
+    async getData() {
+      try {
+        const response = await axios.get(
+            "http://192.168.1.127:8887/json?mode=get_abcde"
+        );
+        // JSON responses are automatically parsed.
+        this.liveConfig = response.data.cfg;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  created() {
+    this.getData();
+  },
+};
 </script>
 
 <template>
@@ -9,7 +35,7 @@
         <form id="abcdeSettings" name="abcdeSettings" method="post" action="">
           <label for="abcdeConfigText">ABCDE Config:</label>
           <textarea id="abcdeConfigText" name="abcdeConfig" spellcheck="false"
-                    class="w-100 form-control min-vh-100">{{ abcde_cfg }}</textarea>
+                    class="w-100 form-control min-vh-100" :value="liveConfig">{{ liveConfig }}</textarea>
           <br>
           <button id="abcdeConfigSubmit" class="btn btn-secondary btn-lg btn-block"
                   form="abcdeSettings">Submit
@@ -18,7 +44,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>

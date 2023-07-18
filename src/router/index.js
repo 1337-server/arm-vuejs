@@ -9,6 +9,10 @@ import Help from "@/components/arm settings/Help.vue";
 import ChangePassword from "@/views/ChangePassword.vue";
 import GeneralInfo from "@/components/arm settings/GeneralInfo.vue";
 import SystemInfo from "@/components/arm settings/SystemInfo.vue";
+import AbcdeConfig from "@/components/arm settings/AbcdeConfig.vue";
+import UiSettings from "@/components/arm settings/UiSettings.vue";
+import Ripper from "@/components/arm settings/Ripper.vue";
+import Apprise from "@/components/arm settings/Apprise.vue";
 
 const routes = [
     {
@@ -64,6 +68,27 @@ const routes = [
         path: '/system-info',
         name: 'System info',
         component: SystemInfo
+    },
+    {
+        path: '/abcde-config',
+        name: 'Abcde Config',
+        component: AbcdeConfig
+    }
+    ,
+    {
+        path: '/apprise-config',
+        name: 'Apprise Config',
+        component: Apprise
+    },
+    {
+        path: '/ripper-settings',
+        name: 'ripper Settings',
+        component: Ripper
+    },
+    {
+        path: '/ui-settings',
+        name: 'Ui Settings',
+        component: UiSettings
     }
 ]
 const router = createRouter({

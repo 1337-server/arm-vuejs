@@ -39,7 +39,6 @@ function refreshJobs(){
   }, (error) => {
     console.log(error);
   });
-      //.then(response => (messageContainer.message = response))
   return messageContainer
 }
 

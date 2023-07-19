@@ -10,6 +10,7 @@
   text-align: center;
   color: #2c3e50;
   min-height: inherit;
+  background-color: #181818;
 }
 
 /* Enter and leave animations can use different */

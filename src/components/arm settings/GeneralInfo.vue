@@ -48,7 +48,7 @@ export default {
 
 <template>
   <div class="tab-pane active pt-5" id="home" role="tabpanel" aria-labelledby="home-tab">
-    <div class="card-deck">
+    <div class="card-deck m-auto">
       <!--Left Card-->
       <div class="card">
         <div class="card-header">Server details</div>

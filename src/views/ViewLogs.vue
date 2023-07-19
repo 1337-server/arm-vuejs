@@ -1,10 +1,10 @@
 <template>
-  <link rel="stylesheet" href="/src/assets/css/job_details.css'">
+  <link rel="stylesheet" href="/src/assets/css/job-details.css">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
-          <div class="jumbotron">
+          <div class="jumbotron mt-5">
             <HomeScreenGreeting msg="Welcome"/>
             <br>
             <div class="row">

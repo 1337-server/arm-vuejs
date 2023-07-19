@@ -3,10 +3,10 @@
     <th scope="row" class="text-wrap">{{ file[0] }}</th>
     <td class="text-wrap">{{ file[2] }}</td>
     <td>{{ file[3] }}</td>
-    <td><a v-bind:href="'logs?logfile=' + file[0] + '&mode=tail'">tail</a></td>
-    <td><a v-bind:href="'logs?logfile=' + file[0] + '&mode=armcat'">arm</a></td>
-    <td><a v-bind:href="'logs?logfile=' + file[0] + '&mode=full'">full</a></td>
-    <td><a v-bind:href="'logreader?logfile=' + file[0] + '&mode=download'">download</a></td>
+    <td><a v-bind:href="'/logs/' + file[0] + '/tail/JOB_ID'">tail</a></td>
+    <td><a v-bind:href="'/logs/' + file[0] + '/armcat/JOB_ID'">arm</a></td>
+    <td><a v-bind:href="'/logs/' + file[0] + '/full/JOB_ID'">full</a></td>
+    <td><a v-bind:href="'/logreader?logfile=' + file[0] + '&mode=download'">download</a></td>
   </tr>
 </template>
 <script setup>

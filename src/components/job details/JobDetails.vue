@@ -40,7 +40,7 @@ export default {
 </script>
 
 <template>
-  <link rel="stylesheet" href="/src/assets/css/job_details.css">
+  <link rel="stylesheet" href="/src/assets/css/job-details.css">
   <div class="container">
     <div class="row">
       <div class="col-sm-12">

@@ -1,5 +1,5 @@
 <template>
-  <link rel="stylesheet" href="/src/assets/css/job_details.css">
+  <link rel="stylesheet" href="/src/assets/css/job-details.css">
   <div class="container content">
     <div class="row">
       <div class="col-12">

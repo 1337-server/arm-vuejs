@@ -14,7 +14,7 @@ let isOpen = ref(false)
 </script>
 <template>
   <nav>
-    <a @click="isShow = !isShow; console.log('Triggered='+ isShow);">
+    <a @click="isShow = !isShow;">
       <CloseMenuIcon/>
     </a>
     <router-link to="/">

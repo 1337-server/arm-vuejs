@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Database from "@/views/Database.vue";
 import ViewLogs from "@/views/ViewLogs.vue";
@@ -12,6 +12,8 @@ import AbcdeConfig from "@/components/arm settings/AbcdeConfig.vue";
 import UiSettings from "@/components/arm settings/UiSettings.vue";
 import Ripper from "@/components/arm settings/Ripper.vue";
 import Apprise from "@/components/arm settings/Apprise.vue";
+import JobDetails from "@/components/job details/JobDetails.vue";
+import LiveViewLogs from "@/views/LiveViewLogs.vue";
 
 const routes = [
     {
@@ -83,11 +85,24 @@ const routes = [
         path: '/ui-settings',
         name: 'Ui Settings',
         component: UiSettings
+    },
+    {
+        path: '/job-details/:job_id',
+        name: 'job details',
+        component: JobDetails,
+        props: true
+    },
+    {
+        path: '/logs/:file/:mode/:job',
+        name: 'Live log viewer',
+        component: LiveViewLogs,
+        props: true
     }
 ]
 const router = createRouter({
-    history: createWebHashHistory(),
+    mode: 'history',
+    history: createWebHistory(),
     routes
-})
+});
 
 export default router

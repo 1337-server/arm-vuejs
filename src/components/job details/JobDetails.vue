@@ -4,6 +4,7 @@ import axios from "axios";
 import Poster from "@/components/job details/Poster.vue";
 import NotMusic from "@/components/job details/NotMusic.vue";
 import TrackList from "@/components/job details/TrackList.vue";
+import {ref} from "vue";
 export default {
   components: {TrackList, NotMusic, Poster, NoPoster},
   props: ['job_id'],
@@ -13,7 +14,9 @@ export default {
       jobs: [],
       jsoncomments:[],
       tracks: [],
-      config: []
+      config: [],
+      jobs_background: ref(""),
+      showPlot: ref(false)
     };
   },
 
@@ -27,6 +30,7 @@ export default {
         this.jsoncomments = response.data.comments
         this.tracks = response.data.tracks
         this.config = response.data.jobs.config
+        this.jobs_background = response.data.jobs.background
       } catch (error) {
         console.log(error);
       }
@@ -58,11 +62,11 @@ export default {
                 <img v-bind:src="jobs.poster_url" class="img-thumbnail"
                      alt="Poster image"></a>
               <div v-if="jobs.video_type !== Music" class="btn-group float-right mt-2" role="group">
-                <a href="titlesearch?job_id={{ jobs.job_id }}" class="btn btn-primary">Title
+                <a v-bind:href="'titlesearch?job_id=' + jobs.job_id" class="btn btn-primary">Title
                   Search</a>
-                <a href="customTitle?job_id={{ jobs.job_id }}" class="btn btn-primary">Custom
+                <a v-bind:href="'customTitle?job_id=' + jobs.job_id" class="btn btn-primary">Custom
                   Title</a>
-                <a id="plot" class="btn btn-primary">Plot</a>
+                <a id="plot" class="btn btn-primary" @click="showPlot = !showPlot"> Plot </a>
               </div>
             </div>
             <div v-else class="card-header background-poster">
@@ -71,14 +75,14 @@ export default {
               <a v-else id="posterClick" href="#">
                 <img src="/src/assets/img/none.png" alt="Not found" width="512" class="img-thumbnail"></a>
               <div v-if="jobs.video_type !== Music" class="btn-group float-right mt-2" role="group">
-                <a href="titlesearch?job_id={{ jobs.job_id }}" class="btn btn-primary">Title
+                <a v-bind:href="'titlesearch/' + jobs.job_id" class="btn btn-primary">Title
                   Search</a>
-                <a href="customTitle?job_id={{ jobs.job_id }}" class="btn btn-primary">Custom
+                <a v-bind:href="'customTitle/'+ jobs.job_id" class="btn btn-primary">Custom
                   Title</a>
-                <a id="plot" class="btn btn-primary">Plot</a>
+                <a class="btn btn-primary" @click="showPlot = !showPlot">Plot</a>
               </div>
             </div>
-            <div id="plotInfo" class="alert alert-info text-center" style="display: none;" role="alert">
+            <div id="plotInfo" class="alert alert-info text-center" v-show="showPlot" role="alert">
               <h4 class="alert-heading">Plot for {{ jobs.title }}</h4>
               <hr>
               <p class="mb-0">{{ jobs.plot }}</p>
@@ -242,10 +246,9 @@ div.card div.background-poster {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  /*
   background-size: 100% 100%;
-  background-image: url(jobs.background);
-  */
+  /* Must come pre-wrapped with url */
+  background-image: v-bind(jobs_background);
 }
 a img.img-thumbnail{
   min-height: 300px;

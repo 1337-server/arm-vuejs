@@ -24,7 +24,7 @@ function getRipperName(job) {
   let idsplit = job.job_id.split("_");
   console.log(idsplit)
   console.log(job.ripper)
-  console.log(idsplit[1])
+  console.log(idsplit[0])
   let ripperName;
   if (job.ripper) {
     ripperName = job.ripper;

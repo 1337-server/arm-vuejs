@@ -62,10 +62,10 @@ export default {
                 <img v-bind:src="jobs.poster_url" class="img-thumbnail"
                      alt="Poster image"></a>
               <div v-if="jobs.video_type !== Music" class="btn-group float-right mt-2" role="group">
-                <a v-bind:href="'titlesearch?job_id=' + jobs.job_id" class="btn btn-primary">Title
-                  Search</a>
-                <a v-bind:href="'customTitle?job_id=' + jobs.job_id" class="btn btn-primary">Custom
-                  Title</a>
+                <router-link :to="'/titlesearch/' + jobs.job_id" class="btn btn-primary">Title
+                  Search</router-link>
+                  <router-link :to="'/customTitle/' + jobs.job_id" class="btn btn-primary">Custom
+                    Title</router-link>
                 <a id="plot" class="btn btn-primary" @click="showPlot = !showPlot"> Plot </a>
               </div>
             </div>
@@ -75,10 +75,10 @@ export default {
               <a v-else id="posterClick" href="#">
                 <img src="/src/assets/img/none.png" alt="Not found" width="512" class="img-thumbnail"></a>
               <div v-if="jobs.video_type !== Music" class="btn-group float-right mt-2" role="group">
-                <a v-bind:href="'titlesearch/' + jobs.job_id" class="btn btn-primary">Title
-                  Search</a>
-                <a v-bind:href="'customTitle/'+ jobs.job_id" class="btn btn-primary">Custom
-                  Title</a>
+                <router-link :to="'/titlesearch/' + jobs.job_id" class="btn btn-primary">Title
+                  Search</router-link>
+                <router-link :to="'/customTitle/'+ jobs.job_id" class="btn btn-primary">Custom
+                  Title</router-link>
                 <a class="btn btn-primary" @click="showPlot = !showPlot">Plot</a>
               </div>
             </div>
@@ -110,8 +110,8 @@ export default {
                 </tr>
                 <tr>
                   <td style="text-align:left"><strong>logfile</strong></td>
-                  <td style="text-align:left"><a
-                      v-bind:href="'logs?logfile='+ jobs.logfile + '&mode=full'">{{ jobs.logfile }}</a>
+                  <td style="text-align:left">
+                    <router-link :to="'/logs/'+ jobs.logfile + '/full/' +  jobs.job_id">{{ jobs.logfile }}</router-link>
                   </td>
                 </tr>
                 <tr>

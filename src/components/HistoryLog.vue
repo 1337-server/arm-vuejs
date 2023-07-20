@@ -11,7 +11,7 @@
                                       width="30px" alt="{{ job.status }}"
                                       title="{{ job.status }}"></td>
     <td>
-      <router-link :to="'logs/'+ job.logfile + '/full/JOB_ID'">{{ job.logfile }}</router-link>
+      <router-link :to="'logs/'+ job.logfile + '/full/' + job.job_id">{{ job.logfile }}</router-link>
     </td>
   </tr>
 </template>

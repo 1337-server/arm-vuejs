@@ -42,7 +42,9 @@ export default {
     return {
       message: "Joey does’t share food!",
       joblist: {},
-      modalOpen: ref(false)
+      modalOpen: ref(false),
+      modalBody: ref(false),
+      mode: ref(false),
     };
   },
   mounted() {
@@ -58,9 +60,56 @@ export default {
   },
   methods: {
     update: function() {
-      console.log("emit fired")
+      console.log("update fired")
       console.log(this.modalOpen)
       this.modalTitle = "Abandon Job"
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    abandon: function() {
+      console.log("Abandon fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Abandon Job"
+      this.mode = "abandon"
+      this.modalBody = "This item will be set to abandoned. You cannot set it back to active! Are you sure?"
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    search: function() {
+      console.log("search fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Search for jobs..."
+      this.mode = "search"
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    getFail: function (){
+      console.log("search fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Get all failed jobs ?"
+      this.mode = "getfailed"
+      this.modalBody = ""
+
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    getSucc: function (){
+      console.log("search fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Get all successful jobs ?"
+      this.mode = "getSuccessful"
+      this.modalBody = ""
+
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    fixPerms: function (){
+      console.log("Fix perms fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Try to fix this jobs folder permissions ?"
+      this.mode = "fixPerms"
+      this.modalBody = "This will try to set the chmod values from your arm.yaml. It wont always work, you may need to do this manually"
+
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
@@ -75,11 +124,13 @@ export default {
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
-    <Modal v-show="modalOpen" v-bind:title="modalTitle"/>
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode"
+           v-bind:modalBody="modalBody" v-on:update-modal="update"/>
     <!-- Messages -->
     <Messages/>
 
-    <Buttons modalOpen="modalOpen" v-on:click="console.log('search buttons');update()"/>
+    <Buttons v-on:update-modal="update" v-on:search="search"
+             v-on:getFail="getFail" v-on:getSucc="getSucc"/>
 
     <!--PAGINATION-->
 
@@ -92,7 +143,8 @@ export default {
             <div class="row h-100 align-items-center">
               <div class="col-md-12 mx-auto">
                 <div id="joblist" class="card-deck">
-                  <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"/>
+                  <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
+                               v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
                 </div>
               </div>
             </div>

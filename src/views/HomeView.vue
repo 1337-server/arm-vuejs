@@ -1,6 +1,7 @@
 <template>
   <div class="home pb-5">
-    <Modal v-show="modalOpen" v-bind:title="modalTitle"/>
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode"
+           v-bind:modalBody="modalBody" v-on:update-modal="update"/>
     <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
     <div class="container-fluid mx-auto">
@@ -8,7 +9,8 @@
     <div class="row align-items-center">
       <div class="col-md-12 mx-auto">
         <div id="joblist" class="card-deck">
-          <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"/>
+          <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
+                       v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
         </div>
       </div>
     </div>
@@ -61,7 +63,8 @@ export default {
       serverutil: {},
       hwsupport: {},
       modalOpen: ref(false),
-      modalTitle: String
+      modalTitle: String,
+      modalBody: String
     };
   },
   mounted() {
@@ -85,6 +88,25 @@ export default {
       console.log(this.modalOpen)
       this.modalOpen = !this.modalOpen;
       this.modalTitle = "Abandon Job"
+      console.log(this.modalOpen)
+    },
+    fixPerms: function (){
+      console.log("Fix perms fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Try to fix this jobs folder permissions ?"
+      this.mode = "fixPerms"
+      this.modalBody = "This will try to set the chmod values from your arm.yaml. It wont always work, you may need to do this manually"
+
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
+    abandon: function() {
+      console.log("Abandon fired")
+      console.log(this.modalOpen)
+      this.modalTitle = "Abandon Job"
+      this.mode = "abandon"
+      this.modalBody = "This item will be set to abandoned. You cannot set it back to active! Are you sure?"
+      this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
   }

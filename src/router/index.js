@@ -14,6 +14,9 @@ import Ripper from "@/components/arm settings/Ripper.vue";
 import Apprise from "@/components/arm settings/Apprise.vue";
 import JobDetails from "@/components/job details/JobDetails.vue";
 import LiveViewLogs from "@/views/LiveViewLogs.vue";
+import TitleSearch from "@/components/TitleSearch.vue";
+import CustomTitle from "@/components/CustomTitle.vue";
+import ChangeParams from "@/components/ChangeParams.vue";
 
 const routes = [
     {
@@ -93,6 +96,24 @@ const routes = [
         path: '/logs/:file/:mode/:job',
         name: 'Live log viewer',
         component: LiveViewLogs,
+        props: true
+    },
+    {
+        path: '/titlesearch/:job',
+        name: 'Search Titles',
+        component: TitleSearch,
+        props: true
+    },
+    {
+        path: '/customTitle/:job',
+        name: 'Set custom title',
+        component: CustomTitle,
+        props: true
+    },
+    {
+        path: '/changeparams/:job',
+        name: 'Change job parameters',
+        component: ChangeParams,
         props: true
     }
 ]

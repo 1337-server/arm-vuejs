@@ -1,7 +1,7 @@
 <template>
   <div class="home pb-5">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Automatic Ripping Machine"/>
+    <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
     <div class="container-fluid mx-auto">
 
     <div class="row align-items-center">
@@ -65,8 +65,7 @@ export default {
     console.log(this.message);
     refreshList = setInterval(refreshJobs, 5000)
     this.$nextTick(() => {
-      this.message =
-          "No data yet....Loading please wait";
+      this.message = "No data yet....Loading please wait";
       console.log(this.message);
     });
   },

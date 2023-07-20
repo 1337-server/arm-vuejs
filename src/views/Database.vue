@@ -72,14 +72,7 @@ export default {
   <div class="container-fluid h-100 mx-auto">
     <!-- Header image -->
     <br>
-    <HomeScreenGreeting msg="Database"/>
-    <div class="row mx-auto align-items-center">
-      <div class="col-sm-12 mx-auto">
-        <p class="text-center">
-          <h5 class="text-center"><strong>Database Entries</strong></h5>
-        </p>
-      </div>
-    </div>
+    <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
     <Modal v-show="modalOpen"/>
     <!-- Messages -->

@@ -5,7 +5,7 @@
       <div class="col-12">
         <div class="table-responsive">
           <div class="jumbotron mt-5">
-            <HomeScreenGreeting msg="Welcome"/>
+            <HomeScreenGreeting msg="A.R.M Logs" msg2=""/>
             <br>
             <div class="row">
               <table class="table table-striped table-hover">

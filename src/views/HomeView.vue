@@ -1,5 +1,6 @@
 <template>
   <div class="home pb-5">
+    <Modal v-show="modalOpen" v-bind:title="modalTitle"/>
     <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
     <div class="container-fluid mx-auto">
@@ -7,7 +8,7 @@
     <div class="row align-items-center">
       <div class="col-md-12 mx-auto">
         <div id="joblist" class="card-deck">
-          <JobTemplate v-bind:joblist="joblist"/>
+          <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"/>
         </div>
       </div>
     </div>
@@ -22,6 +23,8 @@ import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import HelloWorld from '@/components/HomeScreenGreeting.vue'
 import axios from "axios";
 import InfoBlock from "@/components/InfoBlock.vue";
+import Modal from "@/components/database/Modal.vue";
+import {ref} from "vue";
 
 let refreshList;
 let messageContainer;
@@ -45,6 +48,7 @@ function refreshJobs(){
 export default {
   name: 'HomeView',
   components: {
+    Modal,
     InfoBlock,
     JobTemplate,
     HelloWorld,
@@ -55,7 +59,9 @@ export default {
       joblist: {},
       server: {},
       serverutil: {},
-      hwsupport: {}
+      hwsupport: {},
+      modalOpen: ref(false),
+      modalTitle: String
     };
   },
   mounted() {
@@ -72,6 +78,15 @@ export default {
   unmounted() {
     console.log("Clearing timers")
     clearInterval(refreshList);
+  },
+  methods: {
+    update: function() {
+      console.log("emit fired")
+      console.log(this.modalOpen)
+      this.modalOpen = !this.modalOpen;
+      this.modalTitle = "Abandon Job"
+      console.log(this.modalOpen)
+    },
   }
 }
 </script>

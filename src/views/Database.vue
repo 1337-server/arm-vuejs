@@ -60,6 +60,7 @@ export default {
     update: function() {
       console.log("emit fired")
       console.log(this.modalOpen)
+      this.modalTitle = "Abandon Job"
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
@@ -74,7 +75,7 @@ export default {
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
-    <Modal v-show="modalOpen"/>
+    <Modal v-show="modalOpen" v-bind:title="modalTitle"/>
     <!-- Messages -->
     <Messages/>
 

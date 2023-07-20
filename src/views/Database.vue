@@ -8,7 +8,6 @@ import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import axios from "axios";
 import {ref} from "vue";
 
-let refreshList;
 let messageContainer;
 let joblist;
 function refreshJobs(){
@@ -45,6 +44,9 @@ export default {
       modalOpen: ref(false),
       modalBody: ref(false),
       mode: ref(false),
+      currentJob: ref(),
+      error: ref(),
+      errorMessage: ref()
     };
   },
   mounted() {
@@ -65,10 +67,14 @@ export default {
       this.modalTitle = "Abandon Job"
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
+      this.error = false
+      this.errorMessage = ""
     },
-    abandon: function() {
+    abandon: function(job) {
       console.log("Abandon fired")
       console.log(this.modalOpen)
+      console.log(job.job_id)
+      this.currentJob = job.job_id
       this.modalTitle = "Abandon Job"
       this.mode = "abandon"
       this.modalBody = "This item will be set to abandoned. You cannot set it back to active! Are you sure?"
@@ -103,16 +109,33 @@ export default {
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
-    fixPerms: function (){
+    fixPerms: function (job){
       console.log("Fix perms fired")
       console.log(this.modalOpen)
+      console.log(job.job_id)
+      this.currentJob = job.job_id
       this.modalTitle = "Try to fix this jobs folder permissions ?"
       this.mode = "fixPerms"
       this.modalBody = "This will try to set the chmod values from your arm.yaml. It wont always work, you may need to do this manually"
-
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
+    yes:function (){
+      // Send ping to mode with currentJob id
+      console.log(this.currentJob)
+      console.log(this.mode)
+      let jobURl = 'http://192.168.1.127:8887/json?job='+ this.currentJob + '&mode='+ this.mode
+      axios
+          .get(jobURl).then((response) => {
+        console.log(response.data);
+        if(response.data.Error || !response.data.success){
+          this.error = true
+          this.errorMessage = response.data.Error ? response.data.Error: "An unknown error occurred!"
+        }
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }
 }
 </script>
@@ -124,8 +147,8 @@ export default {
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
-    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode"
-           v-bind:modalBody="modalBody" v-on:update-modal="update"/>
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
+           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error"/>
     <!-- Messages -->
     <Messages/>
 
@@ -137,19 +160,9 @@ export default {
     <!-- All jobs -->
     <div class="row">
       <div class="col-md-12 mx-auto">
-        <div class="card-deck">
-          <!-- Job {{ job.job_id }}-->
-          <div class="container-fluid h-100 mx-auto">
-            <div class="row h-100 align-items-center">
-              <div class="col-md-12 mx-auto">
-                <div id="joblist" class="card-deck">
-                  <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
-                               v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div id="joblist" class="card-deck">
+          <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
+                       v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
         </div>
     </div>
   </div>

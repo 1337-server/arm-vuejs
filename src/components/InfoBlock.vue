@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="container content">
+  <div class="container content m-auto">
     <div class="row">
       <!-- System -->
       <div class="col pt-3">

@@ -58,7 +58,7 @@ function getRipperName(job) {
             <JobCardConfig :job="job" :ripper-name="getRipperName(job)"/>
             <!--      // Section 3 (Right Bottom) Contains Buttons for arm json api-->
             <div class="card-body px-2 py-1">
-                <JobCardButtons :job="job" @abandon="$emit('abandon');" @fixPerms="$emit('fixPerms');"/>
+                <JobCardButtons :job="job" @abandon="$emit('abandon', job);" @fixPerms="$emit('fixPerms', job);"/>
               </div>
             </div>
           </div>

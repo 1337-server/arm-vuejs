@@ -10,6 +10,9 @@
           </button>
         </div>
         <div class="modal-body">
+          <div v-show="error" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
           <div class="input-group mb-3" v-if="mode==='search'">
             <div class="input-group-prepend">
               <span class="input-group-text" id="searchlabel">Search </span>
@@ -27,7 +30,7 @@
         <div class="modal-footer">
           <button id="save-no" v-on:click="$emit('update-modal');console.log('Job Card emit')"
                   type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <button id="save-yes" type="button" class="btn btn-primary">Yes</button>
+          <button id="save-yes" type="button" class="btn btn-primary" v-on:click="$emit('yes');">Yes</button>
         </div>
       </div>
     </div>
@@ -47,8 +50,16 @@ defineProps({
     type: String,
     required: false
   },
+  error:{
+    type: Boolean,
+    required: false
+  },
+  errorMessage:{
+    type: String,
+    required: false
+  }
 })
-defineEmits(['update-modal'])
+defineEmits(['update-modal', 'yes'])
 </script>
 <style>
 .modal {

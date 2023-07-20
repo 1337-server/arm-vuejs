@@ -1,7 +1,7 @@
 <template>
   <div class="home pb-5">
-    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode"
-           v-bind:modalBody="modalBody" v-on:update-modal="update"/>
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
+           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error"/>
     <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
     <div class="container-fluid mx-auto">
@@ -64,7 +64,12 @@ export default {
       hwsupport: {},
       modalOpen: ref(false),
       modalTitle: String,
-      modalBody: String
+      modalBody: String,
+      jobId: 0,
+      mode: ref(false),
+      currentJob: ref(),
+      error: ref(),
+      errorMessage: ref()
     };
   },
   mounted() {
@@ -86,29 +91,50 @@ export default {
     update: function() {
       console.log("emit fired")
       console.log(this.modalOpen)
+      this.error = false
+      this.errorMessage = ""
       this.modalOpen = !this.modalOpen;
-      this.modalTitle = "Abandon Job"
+      this.modalTitle = "Open/Close"
       console.log(this.modalOpen)
     },
-    fixPerms: function (){
+    fixPerms: function (job){
       console.log("Fix perms fired")
       console.log(this.modalOpen)
-      this.modalTitle = "Try to fix this jobs folder permissions ?"
+      console.log(job.job_id)
+      this.currentJob = job.job_id
       this.mode = "fixPerms"
+      this.modalTitle = "Try to fix this jobs folder permissions ?"
       this.modalBody = "This will try to set the chmod values from your arm.yaml. It wont always work, you may need to do this manually"
-
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
-    abandon: function() {
+    abandon: function(job) {
       console.log("Abandon fired")
       console.log(this.modalOpen)
-      this.modalTitle = "Abandon Job"
+      console.log(job.job_id)
+      this.currentJob = job.job_id
       this.mode = "abandon"
+      this.modalTitle = "Abandon Job"
       this.modalBody = "This item will be set to abandoned. You cannot set it back to active! Are you sure?"
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
+    yes:function (){
+      // Send ping to mode with currentJob id
+      console.log(this.currentJob)
+      console.log(this.mode)
+      let jobURl = 'http://192.168.1.127:8887/json?job='+ this.currentJob + '&mode='+ this.mode
+      axios
+          .get(jobURl).then((response) => {
+        console.log(response.data);
+        if(response.data.Error || !response.data.success){
+          this.error = true
+          this.errorMessage = response.data.Error ? response.data.Error: "An unknown error occurred!"
+        }
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }
 }
 </script>

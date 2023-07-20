@@ -18,7 +18,7 @@
               <span class="input-group-text" id="searchlabel">Search </span>
             </div>
             <input type="text" class="form-control" id="searchquery" aria-label="searchquery"
-                   name="searchquery" placeholder="Search...."
+                   name="searchquery" placeholder="Search...." @keyup.enter="$emit('yes')"
                    @input="$emit('update:modelValue', $event.target.value)" :value="modelValue"
             aria-describedby="searchlabel">
             <div id="validationServer03Feedback" class="invalid-feedback">
@@ -32,7 +32,7 @@
         <div class="modal-footer">
           <button id="save-no" v-on:click="$emit('update-modal');console.log('Job Card emit')"
                   type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <button id="save-yes" type="button" class="btn btn-primary" v-on:click="$emit('yes');">Yes</button>
+          <button id="save-yes" type="button" class="btn btn-primary" v-on:click="$emit('yes')">Yes</button>
         </div>
       </div>
     </div>
@@ -65,14 +65,14 @@ defineProps({
     required: false
   }
 })
-defineEmits(['update-modal', 'yes:modelValue'])
+defineEmits(['update-modal', 'update:modelValue', 'yes'])
 </script>
 <style>
 .modal {
   position: fixed;
   z-index: 1050;
   display: flex;
-  background-color: rgba(100, 100, 100, 0.9);
+  background-color: rgba(0, 0, 0, 0.95);
 }
 .modal-content{
   z-index: 500000;

@@ -18,7 +18,9 @@
               <span class="input-group-text" id="searchlabel">Search </span>
             </div>
             <input type="text" class="form-control" id="searchquery" aria-label="searchquery"
-                   name="searchquery" placeholder="Search...." value="" aria-describedby="searchlabel">
+                   name="searchquery" placeholder="Search...."
+                   @input="$emit('update:modelValue', $event.target.value)" :value="modelValue"
+            aria-describedby="searchlabel">
             <div id="validationServer03Feedback" class="invalid-feedback">
               Search string too short.
             </div>
@@ -57,9 +59,13 @@ defineProps({
   errorMessage:{
     type: String,
     required: false
+  },
+  modelValue:{
+    type: String,
+    required: false
   }
 })
-defineEmits(['update-modal', 'yes'])
+defineEmits(['update-modal', 'yes:modelValue'])
 </script>
 <style>
 .modal {

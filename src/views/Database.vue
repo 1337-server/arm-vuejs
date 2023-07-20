@@ -46,7 +46,8 @@ export default {
       mode: ref(false),
       currentJob: ref(),
       error: ref(),
-      errorMessage: ref()
+      errorMessage: ref(),
+      query: ''
     };
   },
   mounted() {
@@ -103,7 +104,7 @@ export default {
       console.log("search fired")
       console.log(this.modalOpen)
       this.modalTitle = "Get all successful jobs ?"
-      this.mode = "getSuccessful"
+      this.mode = "getsuccessful"
       this.modalBody = ""
 
       this.modalOpen = !this.modalOpen;
@@ -122,12 +123,25 @@ export default {
     },
     yes:function (){
       // Send ping to mode with currentJob id
+      let jobURl;
       console.log(this.currentJob)
       console.log(this.mode)
-      let jobURl = 'http://192.168.1.127:8887/json?job='+ this.currentJob + '&mode='+ this.mode
+      // Search has a diff query use that instead if we need
+      if(this.mode === 'search'){
+        console.log(this.query)
+        jobURl = 'http://192.168.1.127:8887/json?mode=search&q='+ this.query
+      }else {
+        jobURl = 'http://192.168.1.127:8887/json?mode=' + this.mode + '&job=' + this.currentJob
+      }
       axios
           .get(jobURl).then((response) => {
         console.log(response.data);
+        // Update joblist if we have new list and then close modal
+        if(response.data.results){
+          this.joblist = response.data.results
+          this.update()
+        }
+        // If we ran into a problem show the error and keep modal open
         if(response.data.Error || !response.data.success){
           this.error = true
           this.errorMessage = response.data.Error ? response.data.Error: "An unknown error occurred!"
@@ -148,7 +162,7 @@ export default {
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
     <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
-           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error"/>
+           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error" v-model="query"/>
     <!-- Messages -->
     <Messages/>
 

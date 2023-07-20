@@ -3,12 +3,12 @@ import JobCardPoster from "@/components/jobcards/JobCardPoster.vue";
 import JobCardButtons from "@/components/jobcards/JobCardButtons.vue";
 import JobCardConfig from "@/components/jobcards/JobCardConfig.vue";
 import JobCardMiddle from "@/components/jobcards/JobCardMiddle.vue";
-
+defineEmits(['update-modal'])
 defineProps({
   joblist: {
     type: Object,
     required: true
-  }
+  },
 })
 
 function titleManual(job) {
@@ -58,7 +58,7 @@ function getRipperName(job) {
             <JobCardConfig :job="job" :ripper-name="getRipperName(job)"/>
             <!--      // Section 3 (Right Bottom) Contains Buttons for arm json api-->
             <div class="card-body px-2 py-1">
-                <JobCardButtons :job="job"/>
+                <JobCardButtons :job="job" @jobCardEmit="$emit('update-modal');console.log('job template emit')"/>
               </div>
             </div>
           </div>

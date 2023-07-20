@@ -6,6 +6,7 @@ import Messages from "@/components/database/Messages.vue";
 import Buttons from "@/components/database/Buttons.vue";
 import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import axios from "axios";
+import {ref} from "vue";
 
 let refreshList;
 let messageContainer;
@@ -40,7 +41,8 @@ export default {
   data() {
     return {
       message: "Joey does’t share food!",
-      joblist: {}
+      joblist: {},
+      modalOpen: ref(false)
     };
   },
   mounted() {
@@ -53,6 +55,14 @@ export default {
           "No data yet....Loading please wait";
       console.log(this.message);
     });
+  },
+  methods: {
+    update: function() {
+      console.log("emit fired")
+      console.log(this.modalOpen)
+      this.modalOpen = !this.modalOpen;
+      console.log(this.modalOpen)
+    },
   }
 }
 </script>
@@ -71,11 +81,11 @@ export default {
       </div>
     </div>
     <!-- Modal -->
-    <Modal/>
+    <Modal v-show="modalOpen"/>
     <!-- Messages -->
     <Messages/>
 
-    <Buttons/>
+    <Buttons modalOpen="modalOpen" v-on:click="console.log('search buttons');update()"/>
 
     <!--PAGINATION-->
 
@@ -88,7 +98,7 @@ export default {
             <div class="row h-100 align-items-center">
               <div class="col-md-12 mx-auto">
                 <div id="joblist" class="card-deck">
-                  <JobTemplate v-bind:joblist="joblist"/>
+                  <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"/>
                 </div>
               </div>
             </div>

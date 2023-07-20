@@ -1,8 +1,7 @@
 <template>
   <tr>
     <th scope="row" class="text-wrap">
-      <a v-bind:href="'jobdetail?job_id='+ job.job_id">{{ job.title }}
-      </a>
+      <router-link :to="'job-details/'+ job.job_id">{{ job.title }}</router-link>
     </th>
     <td>{{ job.start_time }}</td>
     <td class="hidden">{{ job.start_time }}</td>
@@ -11,8 +10,9 @@
                                       height="30px"
                                       width="30px" alt="{{ job.status }}"
                                       title="{{ job.status }}"></td>
-    <td><a v-bind:href="'logs?logfile='+ job.logfile + '&mode=full'">
-      {{ job.logfile }}</a></td>
+    <td>
+      <router-link :to="'logs/'+ job.logfile + '/full/JOB_ID'">{{ job.logfile }}</router-link>
+    </td>
   </tr>
 </template>
 <script setup>

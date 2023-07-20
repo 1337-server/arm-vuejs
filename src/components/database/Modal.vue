@@ -1,6 +1,5 @@
 <template>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-       aria-hidden="true">
+  <div class="modal fade show" aria-labelledby="exampleModalCenterTitle">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -34,3 +33,17 @@ export default {
   name: 'modal'
 }
 </script>
+<style>
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1050;
+  display: flex;
+  width: 50%;
+  height: 50%;
+  overflow: hidden;
+  outline: 0;
+  float: right;
+}
+</style>

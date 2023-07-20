@@ -69,7 +69,7 @@ export default {
 
 <template>
 
-  <div class="container-fluid h-100 mx-auto">
+  <div class="jumbotron m-5 mb-5">
     <!-- Header image -->
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>

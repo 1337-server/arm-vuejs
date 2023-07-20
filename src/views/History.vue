@@ -1,18 +1,11 @@
 <template>
   <link rel="stylesheet" href="/src/assets/css/job-details.css">
-  <div class="container content">
+  <div class="jumbotron m-5 mb-5">
     <div class="row">
       <div class="col-12">
         <div class="table-responsive">
           <div class="jumbotron">
-            <div class="row">
-              <div class="col-sm-12  rounded text-center">
-                <img src="/src/assets/img/arm80.png" alt=""><br/>
-                <strong>Welcome to your Automatic Ripping Machine<br></strong>
-                <h1>{{ message }}</h1>
-              </div>
-            </div>
-            <br>
+              <HomeScreenGreeting msg2="" msg="A.R.M Rip History"/><br><br>
             <!-- PAGE NUMBERS -->
             <!-- Main Body -->
             <div class="row">
@@ -75,14 +68,13 @@ and also iPads specifically.
 
 <script>
 import HistoryLog from "@/components/HistoryLog.vue";
-let messageContainer;
-
-// @ is an alias to /src
 import axios from "axios";
+import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
 
 export default {
   name: 'History',
   components: {
+    HomeScreenGreeting,
     HistoryLog,
   },
   data() {

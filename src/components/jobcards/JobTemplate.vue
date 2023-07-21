@@ -41,8 +41,8 @@ function getRipperName(job) {
 
 <template>
     <!-- Start creating the card with job id and header title -->
-    <div v-for="job in joblist" :key="job.id" class="col-md-4" v-bind:id="'jobId' + job.job_id ">
-      <div class="card m-3  mx-auto" style="min-height: 420px;">
+    <div v-for="job in joblist" :key="job.id" class=" col-sm col-md col-xl-4 col-lg-4 text-center p-2" v-bind:id="'jobId' + job.job_id ">
+      <div class="card m-3 mx-auto card text-center h-100" style="min-height: 420px;">
         <div class="card-header row no-gutters justify-content-center">
           <strong v-bind:id="'jobId' + job.job_id + '_header '"> {{ titleManual(job) }} </strong>
         </div>

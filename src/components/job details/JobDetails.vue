@@ -57,10 +57,10 @@ export default {
                 <!-- Proof that just because you CAN doesnt mean you should! -->
               </div>
             </div>
+            <!-- poster found -->
             <div v-if="jobs.poster_url" class="card-header background-poster">
-              <a id="posterClick" href="#">
-                <img v-bind:src="jobs.poster_url" class="img-thumbnail"
-                     alt="Poster image"></a>
+                <img v-bind:src="jobs.poster_url" class="img-thumbnail" :class="{ 'float-left': jobs.background }"
+                     alt="Poster image">
               <div v-if="jobs.video_type !== Music" class="btn-group float-right mt-2" role="group">
                 <router-link :to="'/titlesearch/' + jobs.job_id" class="btn btn-primary">Title
                   Search</router-link>
@@ -69,6 +69,7 @@ export default {
                 <a id="plot" class="btn btn-primary" @click="showPlot = !showPlot"> Plot </a>
               </div>
             </div>
+            <!-- No poster found -->
             <div v-else class="card-header background-poster">
               <a v-if="jobs.video_type === Music" id="posterClick" href="#">
                 <img src="/src/assets/img/music.png" alt="Not found" width="800" class="img-thumbnail"></a>
@@ -91,7 +92,7 @@ export default {
               <table id="jobtable" class="table table-striped" aria-label="Job details">
                 <thead class="bg-secondary">
                 <tr>
-                  <th scope="col" style="text-align:left">Field</th>
+                  <th class="rounded-top" scope="col" style="text-align:left">Field</th>
                   <th scope="col" style="text-align:left">Value</th>
                 </tr>
                 </thead>
@@ -250,7 +251,7 @@ div.card div.background-poster {
   /* Must come pre-wrapped with url */
   background-image: v-bind(jobs_background);
 }
-a img.img-thumbnail{
+img.img-thumbnail{
   min-height: 300px;
   min-width: 200px;
 }

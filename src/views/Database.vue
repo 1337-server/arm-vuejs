@@ -47,7 +47,8 @@ export default {
       currentJob: ref(),
       error: ref(),
       errorMessage: ref(),
-      query: ''
+      query: '',
+      loadingContent: ref(false)
     };
   },
   mounted() {
@@ -125,6 +126,7 @@ export default {
       // Send ping to mode with currentJob id
       let jobURl;
       console.log(this.currentJob)
+      this.loadingContent = true
       console.log(this.mode)
       // Search has a diff query use that instead if we need
       if(this.mode === 'search'){
@@ -149,6 +151,7 @@ export default {
       }, (error) => {
         console.log(error);
       });
+      this.loadingContent = false
     }
   }
 }
@@ -161,7 +164,7 @@ export default {
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
-    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage" v-bind:loadingContent="loadingContent"
            v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error" v-model="query"/>
     <!-- Messages -->
     <Messages/>

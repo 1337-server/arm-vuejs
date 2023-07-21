@@ -2,7 +2,9 @@
   <div v-for="item in results" class="col-sm col-md col-xl-4 col-lg-4 text-center p-2">
     <div class="card text-center h-100" :class="{ 'card-active' : job.imdb_id === item['imdbID']}">
       <div class="card-header">
+        <a v-bind:href="item['Poster']" target="_blank">
           <img v-bind:src="item['Poster']" width="120px" class="img-thumbnail thumbnail zoom" alt="Poster image">
+        </a>
         <div v-if="item['imdbID'] === job.imdb_id" title="Currently Matched" class="d-inline align-text-bottom float-right">
           <Match/>
         </div>

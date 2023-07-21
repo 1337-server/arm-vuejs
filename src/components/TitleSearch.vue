@@ -20,7 +20,7 @@ export default defineComponent({
       job: {},
       results: ref(),
       searchResults: ref(false),
-      currentLoading: ref(false)
+      currentLoading: ref(false),
     };
   },
   methods: {
@@ -51,14 +51,13 @@ export default defineComponent({
           .then(res => this.search(res))
     },
     search: function (response) {
-      if(response.data.search_results.Response === "True"){
+      console.log(response.data.success)
+      if(response.data.success){
         this.searchResults = true
+        this.currentLoading = false
         this.job.title = response.data.title
         this.job.year = response.data.year
         this.results = response.data.search_results.Search
-        console.log("Found search results")
-        console.log(this.results)
-        this.currentLoading = false
       }
     }
   },
@@ -71,7 +70,7 @@ export default defineComponent({
 
 <template>
   <div class="container justify-content-center jumbotron mt-5">
-    <Modal v-show="currentLoading" title="Loading search..."/>
+    <Modal v-show="currentLoading" title="Loading search..." v-bind:loadingContent="currentLoading"/>
     <div class="row justify-content-center" style="flex-wrap: nowrap">
       <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
     </div>

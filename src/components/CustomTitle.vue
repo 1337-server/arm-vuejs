@@ -1,6 +1,41 @@
-<script setup>
+<script>
 
 import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
+import {defineComponent, ref} from "vue";
+import axios from "axios";
+
+export default defineComponent({
+  components: {HomeScreenGreeting},
+  props: {
+    job: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      job: ref(),
+    };
+  },
+  methods: {
+    async getData(jobid) {
+      try {
+        const response = await axios.get(
+            "http://192.168.1.127:8887/json?mode=get_job_details&job_id=" + jobid
+        );
+        // JSON responses are automatically parsed.
+        console.log(response.data)
+        this.job = response.data.jobs
+        this.joblist = response.data.results;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  created() {
+    this.getData(this.$route.params.job);
+  },
+})
 </script>
 
 <template>
@@ -10,12 +45,14 @@ import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
     </div>
     <div class="row">
       <div class="justify-content-center m-auto">
-        <form action="" method="get" novalidate>
+        <form method="post">
           <div class="input-group mb-3 flex-nowrap">
             <div class="input-group-prepend">
               <span class="input-group-text" id="searchtitle">Title</span>
             </div>
-            <input type="text" class="form-control" aria-label="searchtitle" name="title" placeholder="title..." value="{{job.title }}" aria-describedby="searchtitle">
+            <input type="text" class="form-control" aria-label="searchtitle" name="title" placeholder="title..."
+                   v-bind:value="job.title"
+                   aria-describedby="searchtitle">
             <div class="invalid-tooltip">
               Title can't be blank
             </div>
@@ -24,10 +61,10 @@ import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1">Year</span>
             </div>
-            <input type="text" class="form-control" name="year" aria-label="year" value="{{ job.year }}" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" name="year" aria-label="year" v-bind:value="job.year" aria-describedby="basic-addon1">
           </div>
-          <input class="form-control" name="job_id" value="{{ job.job_id }}" hidden>
-          <button class="btn btn-info btn-lg btn-block" type="submit">Set Custom Title</button>
+          <input class="form-control" name="job_id" v-bind:value="job.job_id" hidden>
+          <button class="btn btn-info btn-lg btn-block" type="button" @click.prevent="update">Set Custom Title</button>
         </form>
       </div>
     </div>

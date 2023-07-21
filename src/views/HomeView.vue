@@ -2,18 +2,19 @@
   <div class="home pb-5">
     <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
            v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error"/>
+    <Notification v-bind:notes="notes" v-on:seenNote="seenNote"/>
     <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
     <div class="container-fluid mx-auto">
 
-    <div class="row align-items-center">
-      <div class="col-md-12 mx-auto">
-        <div id="joblist" class="card-deck">
-          <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
-                       v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
+      <div class="row align-items-center">
+        <div class="col-md-12 mx-auto">
+          <div id="joblist" class="card-deck">
+            <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
+                         v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <h1>{{ message }}</h1>
     <InfoBlock v-bind:server="server" v-bind:serverutil="serverutil" v-bind:hwsupport="hwsupport"/>
@@ -23,20 +24,23 @@
 <script>
 import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import HelloWorld from '@/components/HomeScreenGreeting.vue'
-import axios from "axios";
+import Notification from "@/components/Notification.vue";
 import InfoBlock from "@/components/InfoBlock.vue";
 import Modal from "@/components/database/Modal.vue";
+import axios from "axios";
 import {ref} from "vue";
 
 let refreshList;
 let messageContainer;
 let joblist;
-function refreshJobs(){
+
+function refreshJobs() {
   console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
   axios
       .get('http://192.168.1.127:8887/json?mode=joblist').then((response) => {
     console.log(response.data);
     messageContainer.message = response.status
+    messageContainer.notes = response.data.notes
     messageContainer.server = response.data.server
     messageContainer.serverutil = response.data.serverutil
     messageContainer.hwsupport = response.data.hwsupport
@@ -50,6 +54,7 @@ function refreshJobs(){
 export default {
   name: 'HomeView',
   components: {
+    Notification,
     Modal,
     InfoBlock,
     JobTemplate,
@@ -69,13 +74,14 @@ export default {
       mode: ref(false),
       currentJob: ref(),
       error: ref(),
-      errorMessage: ref()
+      errorMessage: ref(),
+      notes: ref()
     };
   },
   mounted() {
     messageContainer = this
     joblist = refreshJobs()
-    this.message="First Loaded"
+    this.message = "First Loaded"
     console.log(this.message);
     refreshList = setInterval(refreshJobs, 5000)
     this.$nextTick(() => {
@@ -88,7 +94,7 @@ export default {
     clearInterval(refreshList);
   },
   methods: {
-    update: function() {
+    update: function () {
       console.log("emit fired")
       console.log(this.modalOpen)
       this.error = false
@@ -97,7 +103,7 @@ export default {
       this.modalTitle = "Open/Close"
       console.log(this.modalOpen)
     },
-    fixPerms: function (job){
+    fixPerms: function (job) {
       console.log("Fix perms fired")
       console.log(this.modalOpen)
       console.log(job.job_id)
@@ -108,7 +114,7 @@ export default {
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
-    abandon: function(job) {
+    abandon: function (job) {
       console.log("Abandon fired")
       console.log(this.modalOpen)
       console.log(job.job_id)
@@ -119,21 +125,27 @@ export default {
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
-    yes:function (){
+    yes: function () {
       // Send ping to mode with currentJob id
       console.log(this.currentJob)
       console.log(this.mode)
-      let jobURl = 'http://192.168.1.127:8887/json?job='+ this.currentJob + '&mode='+ this.mode
-      axios
-          .get(jobURl).then((response) => {
+      let jobURl = 'http://192.168.1.127:8887/json?job=' + this.currentJob + '&mode=' + this.mode
+      axios.get(jobURl).then((response) => {
         console.log(response.data);
-        if(response.data.Error || !response.data.success){
+        if (response.data.Error || !response.data.success) {
           this.error = true
-          this.errorMessage = response.data.Error ? response.data.Error: "An unknown error occurred!"
+          this.errorMessage = response.data.Error ? response.data.Error : "An unknown error occurred!"
         }
       }, (error) => {
         console.log(error);
       });
+    },
+    seenNote: function (note_id) {
+      let url = "http://192.168.1.127:8887/json?mode=read_notification&notify_id=" + note_id
+      axios.get(url).then((response) => {
+        console.log(response.data);
+        refreshJobs()
+      })
     }
   }
 }
@@ -146,10 +158,11 @@ export default {
   top: 20px;
 }
 
-.home img{
+.home img {
   width: 228px;
   height: 85px;
 }
+
 h3 {
   font-size: 1.2rem;
 }

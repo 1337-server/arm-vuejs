@@ -164,7 +164,8 @@ export default {
     <br>
     <HomeScreenGreeting msg="Database Entries" msg2=""/>
     <!-- Modal -->
-    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage" v-bind:loadingContent="loadingContent"
+    <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
+           v-bind:loadingContent="loadingContent"
            v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error" v-model="query"/>
     <!-- Messages -->
     <Messages/>

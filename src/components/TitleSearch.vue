@@ -1,3 +1,39 @@
+<template>
+  <div class="container justify-content-center jumbotron mt-5">
+    <Modal v-show="currentLoading" title="Loading search..." v-bind:loadingContent="currentLoading"/>
+    <div class="row justify-content-center" style="flex-wrap: nowrap">
+      <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
+    </div>
+    <div class="row justify-content-center" style="flex-wrap: nowrap">
+      <form ref="form" @submit.prevent="submit">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="searchtitle">Title</span>
+          </div>
+          <input type="text" class="form-control" aria-label="searchtitle" name="title"
+                 v-bind:value="job.title" aria-describedby="searchtitle">
+          <div class="invalid-tooltip">
+            Search can't be blank
+          </div>
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Year</span>
+          </div>
+          <input type="text" class="form-control" name="year" v-bind:value="job.year"
+                 aria-label="year" aria-describedby="basic-addon1">
+        </div>
+        <input class="form-control" name="mode" value="search_remote" hidden>
+        <input class="form-control" name="job_id" v-bind:value="job.job_id" hidden>
+        <button class="btn btn-info btn-lg btn-block" type="submit">Search</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    <div v-show="searchResults" class="row">
+      <RemoteAPISearch :job="job" :results="results"/>
+    </div>
+  </div>
+</template>
+
 <script>
 
 import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
@@ -67,37 +103,3 @@ export default defineComponent({
 })
 
 </script>
-
-<template>
-  <div class="container justify-content-center jumbotron mt-5">
-    <Modal v-show="currentLoading" title="Loading search..." v-bind:loadingContent="currentLoading"/>
-    <div class="row justify-content-center" style="flex-wrap: nowrap">
-      <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
-    </div>
-    <div class="row justify-content-center" style="flex-wrap: nowrap">
-      <form ref="form" @submit.prevent="submit">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="searchtitle">Title</span>
-          </div>
-          <input type="text" class="form-control" aria-label="searchtitle" name="title" v-bind:value="job.title" aria-describedby="searchtitle">
-          <div class="invalid-tooltip">
-            Search can't be blank
-          </div>
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Year</span>
-          </div>
-          <input type="text" class="form-control" name="year" v-bind:value="job.year" aria-label="year" aria-describedby="basic-addon1">
-        </div>
-        <input class="form-control" name="mode" value="search_remote" hidden>
-        <input class="form-control" name="job_id" v-bind:value="job.job_id" hidden>
-        <button class="btn btn-info btn-lg btn-block" type="submit">Search</button>
-      </form>
-    </div>
-    <br>
-    <br>
-    <div v-show="searchResults" class="row">
-      <RemoteAPISearch :job="job" :results="results"/>
-    </div>
-  </div>
-</template>

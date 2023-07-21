@@ -84,11 +84,13 @@ export default {
                 <a class="btn btn-primary" @click="showPlot = !showPlot">Plot</a>
               </div>
             </div>
+            <Transition>
             <div id="plotInfo" class="alert alert-info text-center" v-show="showPlot" role="alert">
               <h4 class="alert-heading">Plot for {{ jobs.title }}</h4>
               <hr>
               <p class="mb-0">{{ jobs.plot }}</p>
             </div>
+            </Transition>
             <div class="card-body">
               <table id="jobtable" class="table table-striped" aria-label="Job details">
                 <thead class="bg-secondary">
@@ -295,5 +297,15 @@ div.rotten-tomatoes-rotten {
 
 div.ratings {
   margin-top: -50px !important;
+}
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity .5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

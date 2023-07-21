@@ -85,7 +85,9 @@ export default defineComponent({
       }
       console.log(getURL);
       axios.get(this.arm_API + '/json?' + getURL , data)
-          .then(res => this.search(res))
+          .then(res => this.search(res)).catch(
+              error => console.log("error:"+ error),
+          this.currentLoading = false)
     },
     search: function (response) {
       console.log(response.data.success)

@@ -70,8 +70,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <Modal v-show="currentLoading" title="Loading search..."/>
-  <div class="container justify-content-center jumbotron m-auto">
+  <div class="container justify-content-center jumbotron mt-5">
+    <Modal v-show="currentLoading" title="Loading search..."/>
     <div class="row justify-content-center" style="flex-wrap: nowrap">
       <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
     </div>

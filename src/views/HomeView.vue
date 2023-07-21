@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <h1>{{ message }}</h1>
+    <h1>{{ message }} {{ myVar }}</h1>
     <InfoBlock v-bind:server="server" v-bind:serverutil="serverutil" v-bind:hwsupport="hwsupport"/>
   </div>
 </template>
@@ -31,25 +31,7 @@ import axios from "axios";
 import {ref} from "vue";
 
 let refreshList;
-let messageContainer;
 let joblist;
-
-function refreshJobs() {
-  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
-  axios
-      .get('http://192.168.1.127:8887/json?mode=joblist').then((response) => {
-    console.log(response.data);
-    messageContainer.message = response.status
-    messageContainer.notes = response.data.notes
-    messageContainer.server = response.data.server
-    messageContainer.serverutil = response.data.serverutil
-    messageContainer.hwsupport = response.data.hwsupport
-    messageContainer.joblist = response.data.results
-  }, (error) => {
-    console.log(error);
-  });
-  return messageContainer
-}
 
 export default {
   name: 'HomeView',
@@ -75,15 +57,15 @@ export default {
       currentJob: ref(),
       error: ref(),
       errorMessage: ref(),
-      notes: ref()
+      notes: ref(),
+      arm_API: this.armapi
     };
   },
   mounted() {
-    messageContainer = this
-    joblist = refreshJobs()
+    joblist = this.refreshJobs()
     this.message = "First Loaded"
     console.log(this.message);
-    refreshList = setInterval(refreshJobs, 5000)
+    refreshList = setInterval(this.refreshJobs, 5000)
     this.$nextTick(() => {
       this.message = "No data yet....Loading please wait";
       console.log(this.message);
@@ -129,7 +111,7 @@ export default {
       // Send ping to mode with currentJob id
       console.log(this.currentJob)
       console.log(this.mode)
-      let jobURl = 'http://192.168.1.127:8887/json?job=' + this.currentJob + '&mode=' + this.mode
+      let jobURl = this.arm_API + '/json?job=' + this.currentJob + '&mode=' + this.mode
       axios.get(jobURl).then((response) => {
         console.log(response.data);
         if (response.data.Error || !response.data.success) {
@@ -141,11 +123,27 @@ export default {
       });
     },
     seenNote: function (note_id) {
-      let url = "http://192.168.1.127:8887/json?mode=read_notification&notify_id=" + note_id
+      let url = this.arm_API +"/json?mode=read_notification&notify_id=" + note_id
       axios.get(url).then((response) => {
         console.log(response.data);
-        refreshJobs()
+        this.refreshJobs(this.arm_API)
       })
+    },
+    refreshJobs: function () {
+      console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+      axios
+          .get(this.arm_API + '/json?mode=joblist').then((response) => {
+        console.log(response.data);
+        this.message = response.status
+        this.notes = response.data.notes
+        this.server = response.data.server
+        this.serverutil = response.data.serverutil
+        this.hwsupport = response.data.hwsupport
+        this.joblist = response.data.results
+      }, (error) => {
+        console.log(error);
+      });
+      return this
     }
   }
 }

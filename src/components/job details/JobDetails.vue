@@ -16,14 +16,15 @@ export default {
       tracks: [],
       config: [],
       jobs_background: ref(""),
-      showPlot: ref(false)
+      showPlot: ref(false),
+      arm_API: this.armapi
     };
   },
 
   methods: {
     async getData(jobid) {
       try {
-        let jobUrl = "http://192.168.1.127:8887/json?mode=get_job_details&job_id="+ jobid
+        let jobUrl = this.arm_API + "/json?mode=get_job_details&job_id="+ jobid
         const response = await axios.get(jobUrl);
         // JSON responses are automatically parsed.
         this.jobs = response.data.jobs;

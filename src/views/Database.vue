@@ -8,25 +8,7 @@ import JobTemplate from "@/components/jobcards/JobTemplate.vue";
 import axios from "axios";
 import {ref} from "vue";
 
-let messageContainer;
 let joblist;
-function refreshJobs(){
-  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
-  axios
-      .get('http://192.168.1.127:8887/json?mode=database').then((response) => {
-    console.log(response.data);
-    messageContainer.message = response.status
-    console.log(response.data.results)
-    messageContainer.joblist = response.data.results
-    joblist = JSON.parse(JSON.stringify(messageContainer.joblist))
-    console.log(JSON.parse(JSON.stringify(messageContainer.joblist)));
-  }, (error) => {
-    console.log("Error!");
-    console.log(error);
-  });
-  //.then(response => (messageContainer.message = response))
-  return messageContainer.joblist
-}
 // @ is an alias to /src
 export default {
   name: 'database',
@@ -48,12 +30,12 @@ export default {
       error: ref(),
       errorMessage: ref(),
       query: '',
-      loadingContent: ref(false)
+      loadingContent: ref(false),
+      arm_API: this.armapi
     };
   },
   mounted() {
-    messageContainer = this
-    this.joblist = refreshJobs()
+    this.joblist = this.refreshJobs()
     this.message="First Loaded"
     console.log(this.message);
     this.$nextTick(() => {
@@ -131,9 +113,9 @@ export default {
       // Search has a diff query use that instead if we need
       if(this.mode === 'search'){
         console.log(this.query)
-        jobURl = 'http://192.168.1.127:8887/json?mode=search&q='+ this.query
+        jobURl = this.arm_API + '/json?mode=search&q='+ this.query
       }else {
-        jobURl = 'http://192.168.1.127:8887/json?mode=' + this.mode + '&job=' + this.currentJob
+        jobURl = this.arm_API + '/json?mode=' + this.mode + '&job=' + this.currentJob
       }
       axios
           .get(jobURl).then((response) => {
@@ -152,6 +134,23 @@ export default {
         console.log(error);
       });
       this.loadingContent = false
+    },
+    refreshJobs: function (){
+      console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+      axios
+          .get(this.arm_API+ '/json?mode=database').then((response) => {
+        console.log(response.data);
+        this.message = response.status
+        console.log(response.data.results)
+        this.joblist = response.data.results
+        joblist = JSON.parse(JSON.stringify(this.joblist))
+        console.log(JSON.parse(JSON.stringify(this.joblist)));
+      }, (error) => {
+        console.log("Error!");
+        console.log(error);
+      });
+      //.then(response => (messageContainer.message = response))
+      return this.joblist
     }
   }
 }

@@ -5,7 +5,8 @@ export default {
   data() {
     return {
       ui_settings: [],
-      jsoncomments:[]
+      jsoncomments:[],
+      arm_API: this.armapi
     };
   },
 
@@ -13,7 +14,7 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=get_ui_conf"
+            this.arm_API + "/json?mode=get_ui_conf"
         );
         // JSON responses are automatically parsed.
         this.ui_settings = response.data.cfg;

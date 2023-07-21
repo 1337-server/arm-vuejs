@@ -8,9 +8,9 @@ function getData(logUrl, mode, job, container) {
   try {
     if (mode === 'tail' || mode === 'full') {
       //json?logfile=FAST_AND_FURIOUS_G51_168925026218.log&mode=full&job=98
-      logUrl = 'http://192.168.1.127:8887/json?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
+      logUrl = container.arm_API + '/json?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
     } else {
-      logUrl = 'http://192.168.1.127:8887/logreader?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
+      logUrl = container.arm_API + '/logreader?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
     }
     console.log(logUrl)
     axios.get(logUrl).then(function (response) {
@@ -32,14 +32,15 @@ export default {
       mode: String,
       job: String,
       job_title: ref("String"),
-      jsonLog: ref("String")
+      jsonLog: ref("String"),
+      arm_API: this.armapi
     };
   },
 
   methods: {
     async getData(logUrl, mode, job) {
       try {
-        logUrl = 'http://192.168.1.127:8887/json?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
+        logUrl = this.arm_API + '/json?logfile=' + logUrl + '&mode=' + mode + '&job=' + job;
         console.log(logUrl)
         let response = await axios.get(logUrl)
         // JSON responses are automatically parsed.

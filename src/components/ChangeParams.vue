@@ -16,13 +16,14 @@ export default defineComponent({
   data() {
     return {
       job: ref(),
+      arm_API: this.armapi
     };
   },
   methods: {
     async getData(jobid) {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=get_job_details&job_id=" + jobid
+            this.arm_API + "/json?mode=get_job_details&job_id=" + jobid
         );
         // JSON responses are automatically parsed.
         console.log(response.data)
@@ -45,7 +46,7 @@ export default defineComponent({
       // If MAINFEATURE doesn't exist set it to false
       data['MAINFEATURE'] = !data['MAINFEATURE'] ? false : true;
       console.log(getURL);
-      axios.get('http://192.168.1.127:8887/json?' + getURL + '&MAINFEATURE=' + data['MAINFEATURE'], data)
+      axios.get(this.arm_API + '/json?' + getURL + '&MAINFEATURE=' + data['MAINFEATURE'], data)
           .then(res => console.log(res.request.response))
     }
   },

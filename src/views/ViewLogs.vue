@@ -94,24 +94,6 @@ import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
 import axios from "axios";
 import ViewLogFiles from "@/components/ViewLogFiles.vue";
 
-let messageContainer;
-let files;
-function refreshJobs(){
-  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
-  axios
-      .get('http://192.168.1.127:8887/json?mode=logs').then((response) => {
-    console.log(response.data);
-    messageContainer.message = response.status
-    console.log(response.data.results)
-    messageContainer.files = response.data.files
-    console.log(JSON.parse(JSON.stringify(messageContainer.files)));
-  }, (error) => {
-    console.log("Error!");
-    console.log(error);
-  });
-  //.then(response => (messageContainer.message = response))
-  return messageContainer.files
-}
 // @ is an alias to /src
 export default {
   name: 'viewLogs',
@@ -122,12 +104,12 @@ export default {
   data() {
     return {
       message: "Joey does’t share food!",
-      files: {}
+      files: {},
+      arm_API: this.armapi
     };
   },
   mounted() {
-    messageContainer = this
-    this.files = refreshJobs()
+    this.files = this.refreshJobs()
     this.message="First Loaded"
     console.log(this.message);
     this.$nextTick(() => {
@@ -135,6 +117,23 @@ export default {
           "No data yet....Loading please wait";
       console.log(this.message);
     });
+  },
+  methods: {
+    refreshJobs(){
+      console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+      axios
+          .get(this.arm_API + '/json?mode=logs').then((response) => {
+        console.log(response.data);
+        this.message = response.status
+        console.log(response.data.results)
+        this.files = response.data.files
+        console.log(JSON.parse(JSON.stringify(this.files)));
+      }, (error) => {
+        console.log("Error!");
+        console.log(error);
+      });
+      return this.files
+    }
   }
 }
 </script>

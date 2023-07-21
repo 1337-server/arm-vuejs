@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       liveConfig: [],
+      arm_API: this.armapi
     };
   },
 
@@ -12,7 +13,7 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=get_abcde"
+            this.arm_API + "/json?mode=get_abcde"
         );
         // JSON responses are automatically parsed.
         this.liveConfig = response.data.cfg;

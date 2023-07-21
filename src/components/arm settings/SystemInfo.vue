@@ -2,23 +2,7 @@
 import InfoBlock from "@/components/InfoBlock.vue";
 import axios from "axios";
 
-let messageContainer;
 let joblist;
-function refreshJobs(){
-  console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
-  axios
-      .get('http://192.168.1.127:8887/json?mode=joblist').then((response) => {
-    console.log(response.data);
-    messageContainer.message = response.status
-    messageContainer.server = response.data.server
-    messageContainer.serverutil = response.data.serverutil
-    messageContainer.hwsupport = response.data.hwsupport
-  }, (error) => {
-    console.log(error);
-  });
-  //.then(response => (messageContainer.message = response))
-  return messageContainer
-}
 export default {
   name: 'SystemInfo',
   components: {
@@ -29,12 +13,12 @@ export default {
       message: "Joey does’t share food!",
       server: {},
       serverutil: {},
-      hwsupport: {}
+      hwsupport: {},
+      arm_API: this.armapi
     };
   },
   mounted() {
-    messageContainer = this
-    joblist = refreshJobs()
+    joblist = this.refreshJobs()
     this.message = "First Loaded"
     console.log(this.message);
     this.$nextTick(() => {
@@ -42,6 +26,23 @@ export default {
           "No data yet....Loading please wait";
       console.log(this.message);
     });
+  },
+  methods: {
+    refreshJobs: function(){
+      console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+      axios
+          .get(this.arm_API+ '/json?mode=joblist').then((response) => {
+        console.log(response.data);
+        this.message = response.status
+        this.server = response.data.server
+        this.serverutil = response.data.serverutil
+        this.hwsupport = response.data.hwsupport
+      }, (error) => {
+        console.log(error);
+      });
+      //.then(response => (this.message = response))
+      return this
+    }
   }
 }
 </script>

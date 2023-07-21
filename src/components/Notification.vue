@@ -39,6 +39,6 @@ defineEmits(['seenNote'])
 }
 .toast.show{
   border-color: rgb(161, 70, 70);
-  box-shadow: 0px 0px 10px 2px rgb(217, 39, 66);
+  box-shadow: 0 0 10px 2px rgb(217, 39, 66);
 }
 </style>

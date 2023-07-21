@@ -5,7 +5,8 @@ export default {
   data() {
     return {
       liveConfig: [],
-      jsoncomments:[]
+      jsoncomments:[],
+      arm_API: this.armapi
     };
   },
 
@@ -13,7 +14,7 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=get_apprise"
+            this.arm_API + "/json?mode=get_apprise"
         );
         // JSON responses are automatically parsed.
         this.liveConfig = response.data.cfg;
@@ -29,7 +30,6 @@ export default {
   },
 };
 </script>
-
 <template>
   <div class="tab-pane p-5" id="appriseTab" role="tabpanel" aria-labelledby="apprise-tab">
     <form id="appriseCfg" name="appriseCfg" method="post" action="">

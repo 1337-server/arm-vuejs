@@ -80,7 +80,8 @@ export default {
   data() {
     return {
       message: "Ripping History",
-      joblist: {}
+      joblist: {},
+      arm_API: this.armapi
     };
   },
 
@@ -88,7 +89,7 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=database"
+            this.arm_API + "/json?mode=database"
         );
         // JSON responses are automatically parsed.
         this.joblist = response.data.results;

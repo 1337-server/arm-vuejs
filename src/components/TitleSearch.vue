@@ -57,13 +57,14 @@ export default defineComponent({
       results: ref(),
       searchResults: ref(false),
       currentLoading: ref(false),
+      arm_API: this.armapi
     };
   },
   methods: {
     async getData(jobid) {
       try {
         const response = await axios.get(
-            "http://192.168.1.127:8887/json?mode=get_job_details&job_id=" + jobid
+            this.arm_API + "/json?mode=get_job_details&job_id=" + jobid
         );
         // JSON responses are automatically parsed.
         console.log(response.data)
@@ -83,7 +84,7 @@ export default defineComponent({
         getURL += key + "=" + val + "&"
       }
       console.log(getURL);
-      axios.get('http://192.168.1.127:8887/json?' + getURL , data)
+      axios.get(this.arm_API + '/json?' + getURL , data)
           .then(res => this.search(res))
     },
     search: function (response) {

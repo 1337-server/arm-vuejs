@@ -2,24 +2,6 @@
 import Drives from "@/components/arm settings/Drives.vue";
 import axios from "axios";
 
-let messageContainer;
-
-function fetchStats() {
-  axios
-      .get('http://192.168.1.127:8887/json?mode=stats').then((response) => {
-    messageContainer.message = response.status
-    console.log(response.data.results)
-    messageContainer.stats = response.data.stats
-    messageContainer.drives = response.data.drives
-  }, (error) => {
-    console.log("Error Getting Stats!");
-    console.log(error);
-  });
-  //.then(response => (messageContainer.message = response))
-  return messageContainer.stats
-}
-
-// @ is an alias to /src
 export default {
   name: 'GeneralInfo',
   components: {
@@ -29,12 +11,12 @@ export default {
     return {
       message: "Stats here",
       stats: {},
-      drives: {}
+      drives: {},
+      arm_API: this.armapi
     };
   },
   mounted() {
-    messageContainer = this
-    this.stats = fetchStats()
+    this.stats = this.fetchStats()
     this.message = "First Loaded"
     console.log(this.message);
     this.$nextTick(() => {
@@ -42,6 +24,21 @@ export default {
           "No data yet....Loading please wait";
       console.log(this.message);
     });
+  },
+  methods:{
+    fetchStats: function () {
+      axios
+          .get(this.arm_API + '/json?mode=stats').then((response) => {
+        this.message = response.status
+        console.log(response.data.results)
+        this.stats = response.data.stats
+        this.drives = response.data.drives
+      }, (error) => {
+        console.log("Error Getting Stats!");
+        console.log(error);
+      });
+      return this.stats
+    }
   }
 }
 </script>

@@ -36,7 +36,12 @@ export default {
   props: {
     job: {},
     results: ref({}),
-    item: {}
+    item: {},
+  },
+  data() {
+    return {
+      arm_API: this.armapi
+    }
   },
   methods: {
     updateJob: function (job, item) {
@@ -44,7 +49,7 @@ export default {
       console.log(item)
       let getURL = 'title=' + item["Title"] + '&year=' + item["Year"] + '&imdbID=' + item["imdbID"] + '&type=' + item["Type"] + '&poster=' + item['Poster'] + '&job_id=' + job.job_id
       console.log(getURL)
-      axios.get('http://192.168.1.127:8887/json?mode=update_title&' + getURL)
+      axios.get(this.arm_API +'/json?mode=update_title&' + getURL)
           .then(res => this.search(res))
     },
     search: function (response) {

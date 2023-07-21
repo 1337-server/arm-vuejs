@@ -1,11 +1,16 @@
 <script setup>
 
+import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
 </script>
 
 <template>
   <div class="container">
-    <div class="row h-100 mx-auto align-items-center">
-      <div class="col-sm mx-auto" style="flex-wrap: nowrap">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive">
+          <div class="jumbotron mt-5">
+            <HomeScreenGreeting msg="Update The Admin Password" msg2=""/>
+            <br>
         <form id="form1" name="form1" method="post" action="update_password">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -33,9 +38,11 @@
             Update User
           </button>
         </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <style scoped>

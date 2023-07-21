@@ -1,7 +1,9 @@
 <script>
 import axios from "axios";
+import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
 
 export default {
+  components: {HomeScreenGreeting},
   data() {
     return {
       liveConfig: [],
@@ -32,9 +34,12 @@ export default {
 </script>
 
 <template>
-  <div class="tab-pane p-5" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-    <form id="ripperSettings" name="ripperSettings" method="post" action="">
-      {% for k, v in settings.items() %}
+  <div class="container justify-content-center jumbotron mt-4">
+    <div class="col justify-content-center" style="flex-wrap: nowrap">
+      <HomeScreenGreeting msg="Change Ripper Settings" msg2=""/>
+    </div>
+    <div class="row justify-content-center" style="flex-wrap: nowrap">
+      <div class="col-10">    <form id="ripperSettings" name="ripperSettings" method="post" action="">
       <div v-for="(v, k) in liveConfig" key="index" class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" v-bind:id="k">{{ k }}: </span>
@@ -48,10 +53,12 @@ export default {
              height="35px" alt="More Info">
         </a>
       </div>
-      <button id="settings" class="btn btn-secondary btn-lg btn-block" form="ripperSettings"
+      <button id="settings" class="btn btn-primary btn-lg btn-block" form="ripperSettings"
               type="submit">Submit
       </button>
     </form>
+      </div>
+    </div>
   </div>
 
 </template>

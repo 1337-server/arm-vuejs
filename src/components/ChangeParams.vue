@@ -44,7 +44,6 @@ export default defineComponent({
       }
       // If MAINFEATURE doesn't exist set it to false
       data['MAINFEATURE'] = !data['MAINFEATURE'] ? false : true;
-      console.log(data);
       console.log(getURL);
       axios.get('http://192.168.1.127:8887/json?' + getURL + '&MAINFEATURE=' + data['MAINFEATURE'], data)
           .then(res => console.log(res.request.response))

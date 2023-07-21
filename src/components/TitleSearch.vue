@@ -3,9 +3,11 @@
 import HomeScreenGreeting from "@/components/HomeScreenGreeting.vue";
 import {defineComponent, ref} from "vue";
 import axios from "axios";
+import RemoteAPISearch from "@/components/RemoteAPISearch.vue";
+import Modal from "@/components/database/Modal.vue";
 
 export default defineComponent({
-  components: {HomeScreenGreeting},
+  components: {Modal, RemoteAPISearch, HomeScreenGreeting},
   props: {
     job: {
       type: Object,
@@ -15,7 +17,10 @@ export default defineComponent({
 
   data() {
     return {
-      job: ref(),
+      job: {},
+      results: ref(),
+      searchResults: ref(false),
+      currentLoading: ref(false)
     };
   },
   methods: {
@@ -32,24 +37,46 @@ export default defineComponent({
         console.log(error);
       }
     },
+    submit: function () {
+      this.currentLoading = true
+      const formData = new FormData(this.$refs['form']); // reference to form element
+      const data = {}; // need to convert it before using not with XMLHttpRequest
+      let getURL = ""
+      for (let [key, val] of formData.entries()) {
+        Object.assign(data, { [key]: val })
+        getURL += key + "=" + val + "&"
+      }
+      console.log(getURL);
+      axios.get('http://192.168.1.127:8887/json?' + getURL , data)
+          .then(res => this.search(res))
+    },
+    search: function (response) {
+      if(response.data.search_results.Response === "True"){
+        this.searchResults = true
+        this.job.title = response.data.title
+        this.job.year = response.data.year
+        this.results = response.data.search_results.Search
+        console.log("Found search results")
+        console.log(this.results)
+        this.currentLoading = false
+      }
+    }
   },
   created() {
     this.getData(this.$route.params.job);
   },
-  search(){
-    console.log("Searching...");
-  }
 })
 
 </script>
 
 <template>
+  <Modal v-show="currentLoading" title="Loading search..."/>
   <div class="container justify-content-center jumbotron m-auto">
     <div class="row justify-content-center" style="flex-wrap: nowrap">
       <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
     </div>
     <div class="row justify-content-center" style="flex-wrap: nowrap">
-      <form action="" @submit.prevent="submitForm">
+      <form ref="form" @submit.prevent="submit">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text" id="searchtitle">Title</span>
@@ -63,31 +90,15 @@ export default defineComponent({
           </div>
           <input type="text" class="form-control" name="year" v-bind:value="job.year" aria-label="year" aria-describedby="basic-addon1">
         </div>
-        <input class="form-control" name="save" value="save" hidden>
+        <input class="form-control" name="mode" value="search_remote" hidden>
         <input class="form-control" name="job_id" v-bind:value="job.job_id" hidden>
-        <button class="btn btn-info btn-lg btn-block" type="button" v-on:click="search">Search</button>
+        <button class="btn btn-info btn-lg btn-block" type="submit">Search</button>
       </form>
     </div>
-  </div>
-  <br>
-  <br>
-  <div v-if="results" class="row">
-    {% for res in results["Search"] %}
-    <div v-for="result in results" class="col-md-3 text-center">
-      <div class="card text-center">
-        <div class="card-header">
-          <a v-bind:href="'gettitle?imdbID='+ result['imdbID'] + '&job_id=' + job.job_id">
-          <img v-bind:src="result['Poster']" width="120px" class="img-thumbnail" alt="Poster image">
-          </a>
-        </div>
-        <div class="card-body"><strong>{{ res["Title"] }}</strong> - {{ res["Type"].capitalize() }}
-          ({{ res["Year"] }})
-        </div>
-      </div>
+    <br>
+    <br>
+    <div v-show="searchResults" class="row">
+      <RemoteAPISearch :job="job" :results="results"/>
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

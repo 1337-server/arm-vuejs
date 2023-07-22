@@ -46,7 +46,7 @@ export default {
         </div>
         <input type="text" class="form-control" v-bind:aria-label="k" v-bind:name="k"
                v-bind:placeholder="v" v-bind:value="v" v-bind:aria-describedby="k">
-        <a class="popovers" onClick='return false;' href=""
+        <a class="popovers m-auto p-1" onClick='return false;' href=""
            v-bind:data-content="jsoncomments[k]" rel="popover"
         data-placement="top" v-bind:data-original-title="k">
         <img title="More information" src="/src/assets/img/info.png" width="30px"

@@ -83,7 +83,7 @@ export default {
                 <input type="text" class="form-control" aria-label="notify_refresh"
                        name="notify_refresh" placeholder="" v-bind:value="ui_settings.notify_refresh"
                        aria-describedby="notify_refresh">
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['notify_refresh']"
                    rel="popover"
                    data-placement="top" data-original-title="notify_refresh">
@@ -99,7 +99,7 @@ export default {
                 <input type="text" class="form-control" aria-label="use_icons" name="use_icons"
                        v-bind:value="ui_settings.use_icons" disabled>
 
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['use_icons']" rel="popover"
                    data-placement="top" data-original-title="use_icons">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
@@ -114,7 +114,7 @@ export default {
                 </div>
                 <input type="text" class="form-control" aria-label="save_remote_images"
                        name="save_remote_images" v-bind:value="ui_settings.save_remote_images" disabled>
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['save_remote_images']"
                    rel="popover"
                    data-placement="top" data-original-title="save_remote_images">
@@ -130,7 +130,7 @@ export default {
                 <input type="text" class="form-control" aria-label="bootstrap_skin"
                        name="bootstrap_skin" placeholder="" v-bind:value="ui_settings.bootstrap_skin"
                        aria-describedby="bootstrap_skin">
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['bootstrap_skin']"
                    rel="popover"
                    data-placement="top" data-original-title="bootstrap_skin">
@@ -146,7 +146,7 @@ export default {
                 <input type="text" class="form-control" aria-label="language" name="language"
                        placeholder="" v-bind:value="ui_settings.language"
                        aria-describedby="language" disabled>
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['language']" rel="popover"
                    data-placement="top" data-original-title="language">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
@@ -161,7 +161,7 @@ export default {
                 <input type="text" class="form-control" aria-label="database_limit"
                        name="database_limit" placeholder="" v-bind:value="ui_settings.database_limit"
                        aria-describedby="database_limit">
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
+                <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['database_limit']"
                    rel="popover"
                    data-placement="top" data-original-title="database_limit">

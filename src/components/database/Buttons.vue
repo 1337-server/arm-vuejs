@@ -6,9 +6,6 @@
       </button>
       <button id="save-get-failed" type="button" class="btn btn-secondary btn-danger" v-on:click="$emit('getFail');">Get all failed jobs
       </button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" v-on:click="$emit('search');"
-              data-type="search" data-href="json?mode=search&q=">Search Database
-      </button>
     </div>
   </div>
 </template>

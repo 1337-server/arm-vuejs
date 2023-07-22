@@ -5,9 +5,9 @@
     <Notification v-bind:notes="notes" v-on:seenNote="seenNote"/>
     <img alt="Arm logo" title="Arm Logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Automatic Ripping Machine" msg2="Active Rips"/>
-    <div class="container-fluid mx-auto">
+    <div class="container-fluid p-4">
 
-      <div class="row align-items-center">
+      <div class="row align-items-center p-4">
         <div class="col-md-12 mx-auto">
           <div id="joblist" class="card-deck">
             <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"

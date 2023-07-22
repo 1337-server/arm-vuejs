@@ -65,13 +65,19 @@ export default {
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
-    search: function() {
+    search: function(query="") {
+      this.query = query
+      console.log(query)
+      console.log(this.query)
       console.log("search fired")
       console.log(this.modalOpen)
       this.modalTitle = "Search for jobs..."
+      this.modalBody = "Searching......."
+
       this.mode = "search"
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
+      this.yes()
     },
     getFail: function (){
       console.log("search fired")
@@ -151,13 +157,12 @@ export default {
       });
       //.then(response => (messageContainer.message = response))
       return this.joblist
-    }
+    },
   }
 }
 </script>
 
 <template>
-
   <div class="jumbotron m-5 mb-5">
     <!-- Header image -->
     <br>
@@ -165,17 +170,21 @@ export default {
     <!-- Modal -->
     <Modal v-show="modalOpen" v-bind:title="modalTitle" v-bind:mode="mode" v-bind:errorMessage="errorMessage"
            v-bind:loadingContent="loadingContent"
-           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error" v-model="query"/>
+           v-bind:modalBody="modalBody" v-on:update-modal="update" v-on:yes="yes" v-bind:error="error"/>
     <!-- Messages -->
     <Messages/>
-
+    <div class="input-group mb-3">
+      <input type="text" class="form-control mt-4 rounded-pill" aria-label="searchquery"
+             name="searchquery" placeholder="Search...."
+             aria-describedby="searchlabel" @keyup.enter="search(query)"
+             v-model="query">
     <Buttons v-on:update-modal="update" v-on:search="search"
              v-on:getFail="getFail" v-on:getSucc="getSucc"/>
-
+    </div>
     <!--PAGINATION-->
 
     <!-- All jobs -->
-    <div class="row">
+    <div class="row m-auto">
       <div class="col-md-12 mx-auto">
         <div id="joblist" class="card-deck">
           <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
@@ -187,3 +196,9 @@ export default {
   <!--PAGINATION-->
 
 </template>
+
+<style>
+.card{
+  box-shadow: 7px 4px 6px #07070782;
+}
+</style>

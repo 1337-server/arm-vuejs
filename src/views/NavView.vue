@@ -90,10 +90,16 @@ nav {
   background-color: #31353d;
   color: #f2f2f2;
 }
+/*For navi on small screens*/
 @media only screen and (max-width: 1000px) {
   nav{
     display: inline-flex;
     flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
   }
 }
 

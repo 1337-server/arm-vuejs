@@ -308,4 +308,9 @@ div.ratings {
 .v-leave-to {
   opacity: 0;
 }
+.force-wrap{
+  word-wrap: break-word;
+  min-width: 160px;
+  max-width: 160px;
+}
 </style>

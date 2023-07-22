@@ -9,7 +9,7 @@ export default {
 }
 </script>
 <template>
-  <div class="btn-group-vertical" role="group" aria-label="buttons">
+  <div class="btn-group job-buttons" role="group" aria-label="buttons">
     <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
        data-type="abandon" v-bind:data-jobid="job.job_id.split('_')[0]"
        v-bind:data-href="'json?job=' + job.job_id.split('_')[0] + '&mode=abandon'"
@@ -29,5 +29,7 @@ export default {
 </template>
 
 <style scoped>
-
+.job-buttons{
+  position: inherit;
+}
 </style>

@@ -9,7 +9,7 @@
 
       <div class="row align-items-center p-4">
         <div class="col-md-12 mx-auto">
-          <div id="joblist" class="card-deck">
+          <div id="joblist" class="card-deck d-flex justify-content-center">
             <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
                          v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
           </div>

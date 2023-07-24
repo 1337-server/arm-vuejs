@@ -74,7 +74,7 @@ let isOpen = ref(false)
 }
 nav a:hover .nav-icon, nav a.router-link-exact-active:hover .nav-icon, .nav-icon:hover{
   color: #061215;
-  background-color: rgba(22, 199, 255, 0.99);
+  background-color: rgba(22, 199, 255, 0.3);
 }
 nav a:hover .nav-icon svg path,
 nav a:hover .nav-icon svg line,
@@ -104,7 +104,7 @@ nav {
 }
 
 nav a.router-link-exact-active, nav a.router-link-exact-active svg {
-  color: #42b983;
+  color: #d2d2d2;
 }
 nav a.router-link-exact-active .nav-icon svg path,
 nav a.router-link-exact-active .nav-icon svg line,

@@ -159,7 +159,6 @@ export default {
   width: 228px;
   height: 85px;
 }
-
 h3 {
   font-size: 1.2rem;
 }

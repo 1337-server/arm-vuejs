@@ -184,14 +184,16 @@ export default {
     <!--PAGINATION-->
 
     <!-- All jobs -->
-    <div class="row m-auto">
+    <div class="container-fluid p-4">
+    <div class="row align-items-center p-4">
       <div class="col-md-12 mx-auto">
-        <div id="joblist" class="card-deck">
+        <div id="joblist" class="card-deck d-flex justify-content-center">
           <JobTemplate v-bind:joblist="joblist" v-on:update-modal="update"
                        v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
         </div>
     </div>
   </div>
+    </div>
   </div>
   <!--PAGINATION-->
 

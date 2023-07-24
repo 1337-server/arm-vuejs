@@ -192,5 +192,34 @@ defineProps({
 <style scoped>
 .progress-bar {
   color: white !important;
+  padding-top: 4px;
 }
+.card{
+  color: #FFFFFF;
+  background-color: rgb(27, 110, 202);
+}
+.card-header{
+  background-color: rgb(27, 110, 202);
+  color: transparent;
+  text-shadow: 2px 1px 2px rgba(0,0,0,0.9);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: #f0f8fff7;
+  font-size: 140%;
+}
+.card-header strong{
+  background-color: #565656;
+  color: transparent;
+  text-shadow: 2px 1px 2px rgba(0,0,0,0.9);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: #f0f8fff7;
+  font-size: 140%;
+}
+.list-group-item {
+  background-color: #31353d;
+}
+
 </style>

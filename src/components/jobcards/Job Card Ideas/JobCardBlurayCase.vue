@@ -123,7 +123,7 @@ export default {
 
 .PG {
   color: #fff;
-  background-color: #6c757d;
+  background-color: #373737;
   display: inline-block;
   font-size: 122%;
   font-weight: 700;
@@ -134,6 +134,7 @@ export default {
   border-radius: .25rem;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
   padding: 7px;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0) inset;
 }
 
 .disc {
@@ -142,7 +143,7 @@ export default {
 }
 
 a {
-  color: darkcyan;
+  color: #1b6dc9;
   display: block;
   text-decoration: none;
 }

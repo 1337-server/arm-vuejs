@@ -153,7 +153,6 @@ export default {
   font-weight: 500;
   font-size: 0.6rem;
   position: relative;
-  top: 20px;
 }
 
 .home img {

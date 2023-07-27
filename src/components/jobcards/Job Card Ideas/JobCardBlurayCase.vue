@@ -1,8 +1,11 @@
-<template>
-    <h1 class="ribbon">{{ titleManual }}</h1>
+<template style="position: relative;">
+  <h1 class="ribbon" style="display: inline;">{{ titleManual }}</h1>
   <div v-show="showing">
     <div class="card_left d-flex align-items-center justify-content-center">
       <div class="card_datails">
+        <div><router-link style="float: right" class="btn btn-primary" :to="'/job-details/'+ job.job_id">Full details</router-link>
+        </div>
+
         <div class="card_cat">
           <p class="PG">{{ job.disctype }}</p>
           <p class="PG">{{ job.year }}</p>
@@ -13,25 +16,24 @@
           </p>
         </div>
         <div class="disc">{{ job.plot }}
-        <TranscodingStatus :job="job"/>
+          <TranscodingStatus :job="job"/>
           <JobCardConfig :job="job" :ripper-name="getRipperName(job)"/>
         </div>
-        <a href="#" @click.prevent="showCard">Read More plot stuff...</a>
         <JobCardButtons :job="job" @abandon="$emit('abandon', job);" @fixPerms="$emit('fixPerms', job);"/>
       </div>
     </div>
   </div>
   <!-- Poster -->
-    <div class="card_right">
-      <div class="img_container" style="border-radius: 0% 8% 8% 0%;">
-        <img v-bind:src="job.poster_url" alt="" style="border-radius: 0 8% 8% 0;">
-      </div>
-      <div class="play_btn" style="border-radius: 0% 8% 8% 0%;">
-        <a class="click_details"
-           title="Click for more details...." @click.prevent="showing = ! showing">
-        </a>
-      </div>
+  <div class="card_right">
+    <div class="img_container" style="border-radius: 0% 8% 8% 0%;">
+      <img v-bind:src="job.poster_url" alt="" style="border-radius: 0 8% 8% 0;">
     </div>
+    <div class="play_btn" style="border-radius: 0% 8% 8% 0%;">
+      <a class="click_details"
+         title="Click for more details...." @click.prevent="showing = ! showing">
+      </a>
+    </div>
+  </div>
 </template>
 <script>
 
@@ -60,12 +62,11 @@ export default {
       return this.showing
     }
   },
-  methods:{
-    getRipperName: function(job) {
-      console.log(job.job_id)
-      return "Local"
+  methods: {
+    getRipperName: function (job) {
+      console.log(job.job_id);
       // TODO Fix this as the split is not working correctly when in docker
-      let idsplit = job.job_id.split("_");
+      let idsplit = JSON.stringify(job.job_id).split("_");
       console.log(idsplit)
       console.log(job.ripper)
       console.log(idsplit[0])
@@ -86,20 +87,22 @@ export default {
 }
 </script>
 <style>
-.play_btn{
+.play_btn {
   min-width: 263px;
 }
-.img_container{
+
+.img_container {
   min-width: 261px;
   min-height: 200px;
 }
+
 .card_left {
   margin-top: inherit;
 }
 
 .card_datails {
-  padding: 30px;
-  margin-top: 29px;
+  padding: 15px;
+  margin-top: -8px;
   position: relative;
   height: 100%;
 }
@@ -115,6 +118,7 @@ export default {
 }
 
 .card_cat {
+  margin-top: 45px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -206,11 +210,12 @@ a {
   color: #825582;
   text-decoration: none;
 }
-.click_details:hover{
+
+.click_details:hover {
   cursor: pointer;
 }
 
-.ribbon{
+.ribbon {
   position: absolute;
   padding: 0 3em;
   font-size: 1.4em;
@@ -220,33 +225,37 @@ a {
   min-width: 264px;
   border-radius: 0 1.2em 0.156em 0;
   background: rgb(27, 110, 202);
-  box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
 }
 
-.ribbon:before, .ribbon:after{
-  position:absolute;
+.ribbon:before, .ribbon:after {
+  position: absolute;
   content: '';
   display: block;
 }
 
-.ribbon:before{
+.ribbon:before {
   width: 0.5em;
   height: 100%;
   padding: 0 0 0.438em;
-  top:0;
+  top: 0;
   left: -0.5em;
-  background:inherit;
+  background: inherit;
   border-radius: 0.313em 0 0 0.313em;
 }
 
-.ribbon:after{
+.ribbon:after {
   width: 0.313em;
   height: 0.313em;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   bottom: -0.313em;
   left: -0.313em;
   border-radius: 0.313em 0 0 0.313em;
-  box-shadow: inset -1px 2px 2px rgba(0,0,0,0.3);
+  box-shadow: inset -1px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
+.btn-primary:not(.disabled):hover{
+  background-image: linear-gradient(#516e8e, #13549b 50%, #0b2644);
+  box-shadow: 1px 2px 5px #bdb3ba;
+}
 </style>

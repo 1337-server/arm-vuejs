@@ -10,8 +10,9 @@ defineProps({
 })
 
 function titleManual(job) {
+  console.log( "title man = "+job.title_manual)
   let x;
-  if (job.title_manual !== "None") {
+  if (job.title_manual !== "None" && job.title_manual !== null) {
     x = `${job.title_manual}(${job.year})`;
   } else {
     x = `${job.title}(${job.year})`;
@@ -32,7 +33,7 @@ function titleManual(job) {
 
 <style>
 .wrapper{
-  margin: 30px;
+  margin: 11px;
 }
 .click_details{
   border-radius: 0 8% 8% 0;

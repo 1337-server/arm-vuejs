@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(job.status === 'transcoding' || job.stage !== '')" v-bind:id="'jobId' + job.job_id + '_progress_section'">
+  <div v-if="(job.status === 'transcoding' && job.stage !== '')" v-bind:id="'jobId' + job.job_id + '_progress_section'">
     <div v-bind:id="'jobId' + job.job_id + '_stage'">
       <strong>Stage: </strong>{{ job.stage }}</div>
     <div v-bind:id="'jobId' + job.job_id + '_progress'" >

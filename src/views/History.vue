@@ -93,7 +93,7 @@ export default {
         );
         // JSON responses are automatically parsed.
         console.log(response.data.data)
-        this.joblist = response.data.data;
+        this.joblist = response.data.results;
       } catch (error) {
         console.log(error);
       }

@@ -83,7 +83,7 @@ export default {
       console.log("search fired")
       console.log(this.modalOpen)
       this.modalTitle = "Get all failed jobs ?"
-      this.mode = "getfailed"
+      this.mode = "fail"
       this.modalBody = ""
 
       this.modalOpen = !this.modalOpen;
@@ -93,7 +93,7 @@ export default {
       console.log("search fired")
       console.log(this.modalOpen)
       this.modalTitle = "Get all successful jobs ?"
-      this.mode = "getsuccessful"
+      this.mode = "success"
       this.modalBody = ""
 
       this.modalOpen = !this.modalOpen;
@@ -119,9 +119,9 @@ export default {
       // Search has a diff query use that instead if we need
       if(this.mode === 'search'){
         console.log(this.query)
-        jobURl = this.arm_API + '/jobs/search'+ this.query
+        jobURl = this.arm_API + '/jobs/search/'+ this.query
       }else {
-        jobURl = this.arm_API + '/database/?mode=' + this.mode + '/' + this.currentJob
+        jobURl = this.arm_API + '/database/?mode=' + this.mode
       }
       axios
           .get(jobURl).then((response) => {
@@ -148,7 +148,7 @@ export default {
         console.log(response.data);
         this.message = response.status
         console.log(response.data.data)
-        this.joblist = response.data.data
+        this.joblist = response.data.results
         joblist = JSON.parse(JSON.stringify(this.joblist))
         console.log(JSON.parse(JSON.stringify(this.joblist)));
       }, (error) => {
@@ -203,4 +203,22 @@ export default {
 .card{
   box-shadow: 7px 4px 6px #07070782;
 }
+.ribbon{
+  position: absolute;
+  padding: 0 3em;
+  font-size: 0.9em;
+  margin: 0 0 0 0;
+  line-height: 2em;
+  color: #e6e2c8;
+  min-width: 264px;
+  border-radius: 0 1.2em 0.156em 0;
+  background: rgb(27, 110, 202);
+  box-shadow: -1px 2px 3px rgba(0,0,0,0.5);
+  text-overflow: ellipsis;
+  max-width: min-content;
+}
+.PG {
+   line-height: 1;
+   font-size: 100%;
+ }
 </style>

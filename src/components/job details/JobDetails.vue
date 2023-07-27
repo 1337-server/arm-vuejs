@@ -28,10 +28,12 @@ export default {
         const response = await axios.get(jobUrl);
         // JSON responses are automatically parsed.
         this.jobs = response.data;
+        console.log(response.data)
         //this.jsoncomments = response.data.comments
-        //this.tracks = response.data.tracks
-        //this.config = response.data.jobs.config
-        this.jobs_background = response.data.jobs.background
+        this.tracks = response.data.tracks
+        console.log(this.tracks)
+        this.config = response.data.config
+        this.jobs_background = response.data.background
       } catch (error) {
         console.log(error);
       }
@@ -236,7 +238,7 @@ export default {
                 </tbody>
               </table>
               <hr class="test d-none">
-             <TrackList :jobs="jobs" :tracks="tracks"/>
+             <TrackList :tracks="tracks"/>
             </div>
           </div>
         </div>

@@ -127,7 +127,10 @@ export default {
         this.message = response.status
         console.log(response.data.results)
         this.files = response.data.files
-        console.log(JSON.parse(JSON.stringify(this.files)));
+        if(response.data.files === null){
+          console.log("No files found!")
+        }
+        //console.log(JSON.parse(JSON.stringify(this.files)));
       }, (error) => {
         console.log("Error!");
         console.log(error);

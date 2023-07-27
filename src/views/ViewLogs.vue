@@ -122,7 +122,7 @@ export default {
     refreshJobs(){
       console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
       axios
-          .get(this.arm_API + '/json?mode=logs').then((response) => {
+          .get(this.arm_API + '/logs').then((response) => {
         console.log(response.data);
         this.message = response.status
         console.log(response.data.results)

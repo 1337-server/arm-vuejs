@@ -119,9 +119,9 @@ export default {
       // Search has a diff query use that instead if we need
       if(this.mode === 'search'){
         console.log(this.query)
-        jobURl = this.arm_API + '/json?mode=search&q='+ this.query
+        jobURl = this.arm_API + '/jobs/search'+ this.query
       }else {
-        jobURl = this.arm_API + '/json?mode=' + this.mode + '&job=' + this.currentJob
+        jobURl = this.arm_API + '/database/?mode=' + this.mode + '/' + this.currentJob
       }
       axios
           .get(jobURl).then((response) => {
@@ -144,11 +144,11 @@ export default {
     refreshJobs: function (){
       console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
       axios
-          .get(this.arm_API+ '/json?mode=database').then((response) => {
+          .get(this.arm_API+ '/database').then((response) => {
         console.log(response.data);
         this.message = response.status
-        console.log(response.data.results)
-        this.joblist = response.data.results
+        console.log(response.data.data)
+        this.joblist = response.data.data
         joblist = JSON.parse(JSON.stringify(this.joblist))
         console.log(JSON.parse(JSON.stringify(this.joblist)));
       }, (error) => {

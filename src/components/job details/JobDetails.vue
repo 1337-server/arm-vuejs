@@ -24,13 +24,13 @@ export default {
   methods: {
     async getData(jobid) {
       try {
-        let jobUrl = this.arm_API + "/json?mode=get_job_details&job_id="+ jobid
+        let jobUrl = this.arm_API + "/jobs/"+ jobid
         const response = await axios.get(jobUrl);
         // JSON responses are automatically parsed.
-        this.jobs = response.data.jobs;
-        this.jsoncomments = response.data.comments
-        this.tracks = response.data.tracks
-        this.config = response.data.jobs.config
+        this.jobs = response.data;
+        //this.jsoncomments = response.data.comments
+        //this.tracks = response.data.tracks
+        //this.config = response.data.jobs.config
         this.jobs_background = response.data.jobs.background
       } catch (error) {
         console.log(error);

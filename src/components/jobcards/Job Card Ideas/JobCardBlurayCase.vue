@@ -62,6 +62,9 @@ export default {
   },
   methods:{
     getRipperName: function(job) {
+      console.log(job.job_id)
+      return "Local"
+      // TODO Fix this as the split is not working correctly when in docker
       let idsplit = job.job_id.split("_");
       console.log(idsplit)
       console.log(job.ripper)

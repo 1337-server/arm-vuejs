@@ -153,7 +153,7 @@ export default {
         console.log(JSON.parse(JSON.stringify(this.joblist)));
       }, (error) => {
         console.log("Error!");
-        console.log(error);
+        console.log(error.response);
       });
       //.then(response => (messageContainer.message = response))
       return this.joblist

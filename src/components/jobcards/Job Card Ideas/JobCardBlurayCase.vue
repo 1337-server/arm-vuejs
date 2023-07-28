@@ -207,7 +207,7 @@ h1, h2 {
 }
 
 a {
-  color: #825582;
+  color: #12158d;
   text-decoration: none;
 }
 

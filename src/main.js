@@ -6,6 +6,5 @@ import router from './router'
 let app = createApp(App)
 
 // Set global arm api backend link
-app.config.globalProperties.armapi = 'http://192.168.1.127:8899'
-
+app.config.globalProperties.armapi = 'http://127.0.0.1:8000'
 app.use(router).mount('#app')

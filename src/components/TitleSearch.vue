@@ -64,11 +64,11 @@ export default defineComponent({
     async getData(jobid) {
       try {
         const response = await axios.get(
-            this.arm_API + "/json?mode=get_job_details&job_id=" + jobid
+            this.arm_API + "/jobs/" + jobid
         );
         // JSON responses are automatically parsed.
         console.log(response.data)
-        this.job = response.data.jobs
+        this.job = response.data
         this.joblist = response.data.results;
       } catch (error) {
         console.log(error);

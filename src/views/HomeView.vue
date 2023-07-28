@@ -111,7 +111,7 @@ export default {
       // Send ping to mode with currentJob id
       console.log(this.currentJob)
       console.log(this.mode)
-      let jobURl = this.arm_API + '/json?job=' + this.currentJob + '&mode=' + this.mode
+      let jobURl = this.arm_API + '/jobs/' + this.currentJob + '/' + this.mode
       axios.get(jobURl).then((response) => {
         console.log(response.data);
         if (response.data.Error || !response.data.success) {
@@ -136,8 +136,8 @@ export default {
         console.log(response.data);
         this.message = response.status
         //this.notes = response.data.notes
-        //this.server = response.data.server
-        //this.serverutil = response.data.serverutil
+        this.server = response.data.server
+        this.serverutil = response.data.serverutil
         //this.hwsupport = response.data.hwsupport
         this.joblist = response.data.results
       }, (error) => {

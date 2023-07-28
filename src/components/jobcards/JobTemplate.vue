@@ -131,7 +131,7 @@ h1, h2 {
 }
 
 a{
-  color: #825582;
+  color: #1b3881;
   text-decoration: none;
 }
 </style>

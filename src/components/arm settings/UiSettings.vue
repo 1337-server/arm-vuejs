@@ -8,7 +8,17 @@ export default {
     return {
       ui_settings: [],
       jsoncomments: [],
-      arm_API: this.armapi
+      arm_API: this.armapi,
+      form: {
+        _method: 'PUT',
+        index_refresh: '',
+        notify_refresh: '',
+        use_icons: '',
+        save_remote_images: '',
+        bootstrap_skin: '',
+        language: '',
+        database_limit: ''
+      }
     };
   },
 
@@ -16,31 +26,22 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            this.arm_API + "/json?mode=get_ui_conf"
+            this.arm_API + "/settings/get_ui_conf"
         );
         // JSON responses are automatically parsed.
-        this.ui_settings = response.data.cfg;
+        this.form = response.data.cfg;
         this.jsoncomments = response.data.comments
       } catch (error) {
         console.log(error);
       }
     },
     submit: function () {
-      const formData = new FormData(this.$refs['form']); // reference to form element
-      const data = {}; // need to convert it before using not with XMLHttpRequest
-      let postData = {}
-      for (let [key, val] of formData.entries()) {
-        Object.assign(data, {[key]: val})
-        postData[key] = '"'+ val + '"'
-      }
-      console.log(postData)
-      axios.post(this.arm_API + '/save_ui_settings', postData)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
+      axios.put(this.arm_API + "/settings/get_ui_conf", this.form)
+          .then((data) => {
+            console.log(data)
+          }, (error) => {
             console.log(error);
-          });
+          })
     }
   },
 
@@ -58,15 +59,15 @@ export default {
           <div class="jumbotron mt-5">
             <HomeScreenGreeting msg="Change UI Settings" msg2=""/>
             <br>
-            <form ref="form" @submit.prevent="submit" id="my-form">
+            <form ref="form" @submit.prevent="submit">
               <!-- INDEX REFRESH -->
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="index_refresh">index_refresh: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="index_refresh"
-                       name="index_refresh" placeholder="" v-bind:value="ui_settings.index_refresh"
-                       aria-describedby="index_refresh">
+                       name="index_refresh" placeholder=""
+                       aria-describedby="index_refresh" v-model="form.index_refresh">
                 <a class="popovers m-auto p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['index_refresh']"
                    rel="popover"
@@ -81,8 +82,8 @@ export default {
                   <span class="input-group-text" id="notify_refresh">Notification Timeout: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="notify_refresh"
-                       name="notify_refresh" placeholder="" v-bind:value="ui_settings.notify_refresh"
-                       aria-describedby="notify_refresh">
+                       name="notify_refresh" placeholder=""
+                       aria-describedby="notify_refresh" v-model="form.notify_refresh">
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['notify_refresh']"
                    rel="popover"
@@ -97,7 +98,7 @@ export default {
                   <span class="input-group-text" id="use_icons">use_icons: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="use_icons" name="use_icons"
-                       v-bind:value="ui_settings.use_icons" disabled>
+                       v-model="form.use_icons">
 
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['use_icons']" rel="popover"
@@ -113,7 +114,7 @@ export default {
                           id="save_remote_images">save_remote_images: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="save_remote_images"
-                       name="save_remote_images" v-bind:value="ui_settings.save_remote_images" disabled>
+                       name="save_remote_images" v-model="form.save_remote_images">
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['save_remote_images']"
                    rel="popover"
@@ -128,7 +129,7 @@ export default {
                   <span class="input-group-text" id="bootstrap_skin">bootstrap_skin: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="bootstrap_skin"
-                       name="bootstrap_skin" placeholder="" v-bind:value="ui_settings.bootstrap_skin"
+                       name="bootstrap_skin" placeholder="" v-model="form.bootstrap_skin"
                        aria-describedby="bootstrap_skin">
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['bootstrap_skin']"
@@ -144,8 +145,8 @@ export default {
                   <span class="input-group-text" id="language">language: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="language" name="language"
-                       placeholder="" v-bind:value="ui_settings.language"
-                       aria-describedby="language" disabled>
+                       placeholder="" v-model="form.language"
+                       aria-describedby="language">
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['language']" rel="popover"
                    data-placement="top" data-original-title="language">
@@ -159,7 +160,7 @@ export default {
                   <span class="input-group-text" id="database_limit">database_limit: </span>
                 </div>
                 <input type="text" class="form-control" aria-label="database_limit"
-                       name="database_limit" placeholder="" v-bind:value="ui_settings.database_limit"
+                       name="database_limit" placeholder="" v-model="form.database_limit"
                        aria-describedby="database_limit">
                 <a class="popovers p-2" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['database_limit']"

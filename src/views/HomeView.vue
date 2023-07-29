@@ -123,7 +123,7 @@ export default {
       });
     },
     seenNote: function (note_id) {
-      let url = this.arm_API +"/json?mode=read_notification&notify_id=" + note_id
+      let url = this.arm_API +"/read_notification/" + note_id
       axios.get(url).then((response) => {
         console.log(response.data);
         this.refreshJobs(this.arm_API)
@@ -135,7 +135,7 @@ export default {
           .get(this.arm_API + '/jobs').then((response) => {
         console.log(response.data);
         this.message = response.status
-        //this.notes = response.data.notes
+        this.notes = response.data.notes
         this.server = response.data.server
         this.serverutil = response.data.serverutil
         //this.hwsupport = response.data.hwsupport

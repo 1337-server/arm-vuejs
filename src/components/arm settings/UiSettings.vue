@@ -65,16 +65,21 @@ export default {
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="index_refresh">index_refresh: </span>
                 </div>
+
                 <input type="text" class="form-control" aria-label="index_refresh"
                        name="index_refresh" placeholder=""
                        aria-describedby="index_refresh" v-model="form.index_refresh">
-                <a class="popovers m-auto p-2" onClick='return false;' href=""
-                   v-bind:data-content="jsoncomments['index_refresh']"
-                   rel="popover"
-                   data-placement="top" data-original-title="index_refresh">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                    <a class="popovers m-auto" onClick='return false;' href=""
+                       v-bind:data-content="jsoncomments['index_refresh']"
+                       rel="popover"
+                       data-placement="top" data-original-title="index_refresh">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                </span>
+                </div>
               </div>
               <!-- NOTIFICATION TIMEOUT -->
               <div class="input-group mb-3">
@@ -84,13 +89,17 @@ export default {
                 <input type="text" class="form-control" aria-label="notify_refresh"
                        name="notify_refresh" placeholder=""
                        aria-describedby="notify_refresh" v-model="form.notify_refresh">
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['notify_refresh']"
                    rel="popover"
                    data-placement="top" data-original-title="notify_refresh">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                  </span>
+                </div>
               </div>
               <!-- USE ICONS -->
               <div class="input-group mb-3">
@@ -99,13 +108,16 @@ export default {
                 </div>
                 <input type="text" class="form-control" aria-label="use_icons" name="use_icons"
                        v-model="form.use_icons">
-
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['use_icons']" rel="popover"
                    data-placement="top" data-original-title="use_icons">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                    </span>
+                </div>
               </div>
               <!-- SAVE REMOTE IMAGES-->
               <div class="input-group mb-3">
@@ -115,13 +127,17 @@ export default {
                 </div>
                 <input type="text" class="form-control" aria-label="save_remote_images"
                        name="save_remote_images" v-model="form.save_remote_images">
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['save_remote_images']"
                    rel="popover"
                    data-placement="top" data-original-title="save_remote_images">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                                        </span>
+                </div>
               </div>
               <!-- BOOTSTRAP SKIN -->
               <div class="input-group mb-3">
@@ -131,13 +147,17 @@ export default {
                 <input type="text" class="form-control" aria-label="bootstrap_skin"
                        name="bootstrap_skin" placeholder="" v-model="form.bootstrap_skin"
                        aria-describedby="bootstrap_skin">
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['bootstrap_skin']"
                    rel="popover"
                    data-placement="top" data-original-title="bootstrap_skin">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                                        </span>
+                </div>
               </div>
               <!-- LANGUAGE -->
               <div class="input-group mb-3">
@@ -147,12 +167,16 @@ export default {
                 <input type="text" class="form-control" aria-label="language" name="language"
                        placeholder="" v-model="form.language"
                        aria-describedby="language">
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['language']" rel="popover"
                    data-placement="top" data-original-title="language">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                                        </span>
+                </div>
               </div>
               <!-- DATABASE LIMIT -->
               <div class="input-group mb-3">
@@ -162,13 +186,17 @@ export default {
                 <input type="text" class="form-control" aria-label="database_limit"
                        name="database_limit" placeholder="" v-model="form.database_limit"
                        aria-describedby="database_limit">
-                <a class="popovers p-2" onClick='return false;' href=""
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+                <a class="popovers" onClick='return false;' href=""
                    v-bind:data-content="jsoncomments['database_limit']"
                    rel="popover"
                    data-placement="top" data-original-title="database_limit">
                   <img title="More information" src="/src/assets/img/info.png" width="30px"
                        height="35px" alt="More info">
                 </a>
+                                        </span>
+                </div>
               </div>
               <button class="btn btn-primary btn-lg btn-block" type="submit">
                 Submit

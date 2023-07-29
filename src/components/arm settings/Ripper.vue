@@ -19,8 +19,8 @@ export default {
             this.arm_API + "/settings/ripper"
         );
         // JSON responses are automatically parsed.
-        this.liveConfig = response.data.data;
-        //this.jsoncomments = response.data.comments
+        this.liveConfig = response.data.cfg;
+        this.jsoncomments = response.data.comments
       } catch (error) {
         console.log(error);
       }
@@ -55,12 +55,16 @@ export default {
               <span class="input-group-text">{{ k }}: </span>
             </div>
             <input type="text" class="form-control" v-bind:aria-label="k" v-model="liveConfig[k]">
-            <a class="popovers m-auto p-1" onClick='return false;' href=""
+            <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">
+            <a class="popovers m-auto" onClick='return false;' href=""
                v-bind:data-content="jsoncomments[k]" rel="popover"
                data-placement="top" v-bind:data-original-title="k">
               <img title="More information" src="/src/assets/img/info.png" width="30px"
                    height="35px" alt="More Info">
             </a>
+                  </span>
+            </div>
           </div>
           <button class="btn btn-primary btn-lg btn-block" type="submit">
             Submit

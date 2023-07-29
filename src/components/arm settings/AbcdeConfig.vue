@@ -15,10 +15,10 @@ export default {
     async getData() {
       try {
         const response = await axios.get(
-            this.arm_API + "/json?mode=get_abcde"
+            this.arm_API + "/settings/get_apprise"
         );
         // JSON responses are automatically parsed.
-        this.liveConfig = response.data.cfg;
+        this.liveConfig = response.data;
       } catch (error) {
         console.log(error);
       }
@@ -34,7 +34,7 @@ export default {
 <template>
   <div class="container justify-content-center jumbotron mt-4">
     <div class="col justify-content-center" style="flex-wrap: nowrap">
-      <HomeScreenGreeting msg="Change Ripper Settings" msg2=""/>
+      <HomeScreenGreeting msg="Change ABCDE Settings" msg2=""/>
     </div>
     <div class="row justify-content-center" style="flex-wrap: nowrap">
       <div class="col-10">

@@ -1,6 +1,6 @@
 <template>
   <div class="container justify-content-center jumbotron mt-5">
-    <Modal v-show="currentLoading" title="Loading search..."/>
+    <Modal v-show="modalOpen" title="Loading search..." @update-modal="modalOpen=!modalOpen"/>
     <div class="row justify-content-center" style="flex-wrap: nowrap">
       <HomeScreenGreeting msg="Search for Title" msg2="Search the api for correct title match"/>
     </div>
@@ -55,9 +55,10 @@ export default defineComponent({
       job: {},
       title: "",
       year: "",
+      modalOpen: ref(false),
       results: ref(),
       searchResults: false,
-      currentLoading: false,
+      currentLoading: ref(false),
       arm_API: this.armapi
     };
   },
@@ -68,7 +69,6 @@ export default defineComponent({
             this.arm_API + "/jobs/" + jobid
         );
         // JSON responses are automatically parsed.
-        console.log(response.data)
         this.job = response.data
         this.title = response.data.title
         this.year = response.data.year
@@ -77,12 +77,15 @@ export default defineComponent({
       }
     },
     submit: function () {
-      this.currentLoading = true
+      // Open the modal to show that data is being loaded
+      this.modalOpen = !this.modalOpen;
+      // Add the year as null, so it doesn't cause the api to error out
       this.year = (this.year == null || this.year === "") ? 'null' : this.year
       axios.get(this.arm_API + '/search_remote/' + this.title + "/" + this.year+ "/" + this.job.job_id)
-          .then(res => this.search(res)).catch(
+          .then(res => this.search(res),this.modalOpen = !this.modalOpen).catch(
               error => console.log("error:"+ error),
-          this.currentLoading = false)
+              this.modalOpen = !this.modalOpen
+       )
     },
     search: function (response) {
       console.log(response.data)
@@ -91,9 +94,11 @@ export default defineComponent({
         this.currentLoading = false
         this.job.title = response.data.title
         this.job.year = response.data.year
-        console.log(response.data.search_results.Search)
         this.results = response.data.search_results.Search
-        console.log(this.results)
+        // Only close the modal when we have results
+        if(this.results){
+          this.modalOpen = !this.modalOpen
+        }
       }
     }
   },

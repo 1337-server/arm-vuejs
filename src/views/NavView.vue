@@ -9,22 +9,29 @@ import ChangePasswordIcon from "@/components/icons/ChangePassword.vue";
 import ViewLogsIcon from "@/components/icons/ViewLogs.vue";
 import NaviAccordionSettings from "@/components/NaviAccordionSettings.vue";
 import {ref} from 'vue'
-
+import NotificationIcon from "@/components/icons/NotificationIcon.vue";
+// Main menu open/close
 let isShow = ref(true)
+// Sub menu open/close
 let isOpen = ref(false)
 </script>
 <template>
   <nav>
-    <div class="rounded">
+    <div class="rounded" :class="{ 'd-flex': isShow }">
     <a @click="isShow = !isShow;">
       <div class="rounded nav-icon">
         <CloseMenuIcon/>
       </div>
     </a>
+      <router-link class="rounded" to="/notifications" title="View Notifications">
+        <div class="rounded nav-icon">
+          <NotificationIcon/>
+        </div>
+      </router-link>
     </div>
     <hr>
 
-    <router-link class="rounded" to="/" title="Open/Close menu">
+    <router-link class="rounded" to="/" title="Home">
       <div class="rounded nav-icon">
         <HomeIcon/>
       </div>

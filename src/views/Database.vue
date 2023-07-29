@@ -95,7 +95,6 @@ export default {
       this.modalTitle = "Get all successful jobs ?"
       this.mode = "success"
       this.modalBody = ""
-
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
     },
@@ -105,7 +104,7 @@ export default {
       console.log(job.job_id)
       this.currentJob = job.job_id
       this.modalTitle = "Try to fix this jobs folder permissions ?"
-      this.mode = "fixPerms"
+      this.mode = "fix_perms"
       this.modalBody = "This will try to set the chmod values from your arm.yaml. It wont always work, you may need to do this manually"
       this.modalOpen = !this.modalOpen;
       console.log(this.modalOpen)
@@ -120,7 +119,10 @@ export default {
       if(this.mode === 'search'){
         console.log(this.query)
         jobURl = this.arm_API + '/jobs/search/'+ this.query
-      }else {
+      }else if(this.mode === "abandon" || this.mode === "fix_perms"){
+        jobURl = this.arm_API + '/jobs/' +this.currentJob + '/'+ this.mode
+        console.log(jobURl)
+      } else {
         jobURl = this.arm_API + '/database/?mode=' + this.mode
       }
       axios
@@ -192,7 +194,7 @@ export default {
                        v-on:abandon="abandon" v-on:fixPerms="fixPerms"/>
         </div>
     </div>
-  </div>
+    </div>
     </div>
   </div>
   <!--PAGINATION-->

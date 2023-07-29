@@ -18,6 +18,7 @@ import TitleSearch from "@/components/TitleSearch.vue";
 import CustomTitle from "@/components/CustomTitle.vue";
 import ChangeParams from "@/components/ChangeParams.vue";
 import Login from "@/views/Login.vue";
+import Notifications from "@/views/Notifications.vue";
 
 const routes = [
     {
@@ -121,6 +122,12 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login,
+        props: true
+    },
+    {
+        path: '/notifications',
+        name: 'Notifications',
+        component: Notifications,
         props: true
     }
 ]

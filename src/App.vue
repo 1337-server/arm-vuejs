@@ -38,7 +38,7 @@ if( token ){
     window.location.href = "/login";
   }
 }
-import {defineComponent, ref} from "vue";
+import {defineComponent} from "vue";
 import NavView from "@/views/NavView.vue";
 
 export default defineComponent({

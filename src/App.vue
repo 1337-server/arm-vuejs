@@ -39,11 +39,10 @@ if( token ){
   }
 }
 import {defineComponent, ref} from "vue";
-import Messages from "@/components/database/Messages.vue";
 import NavView from "@/views/NavView.vue";
 
 export default defineComponent({
-  components: {NavView, Messages},
+  components: {NavView},
   data() {
     return {
       arm_API: this.armapi

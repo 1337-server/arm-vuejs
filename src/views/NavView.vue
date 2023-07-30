@@ -107,6 +107,7 @@ nav {
     left: 0;
     z-index: 1000;
     width: 100%;
+    opacity: 0.8;
   }
 }
 

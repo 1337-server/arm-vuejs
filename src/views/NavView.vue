@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import CloseMenuIcon from '../components/icons/CloseMenu.vue'
 import HomeIcon from '../components/icons/Home.vue'
 import HistoryIcon from '../components/icons/History.vue'
@@ -10,10 +10,58 @@ import ViewLogsIcon from "@/components/icons/ViewLogs.vue";
 import NaviAccordionSettings from "@/components/NaviAccordionSettings.vue";
 import {ref} from 'vue'
 import NotificationIcon from "@/components/icons/NotificationIcon.vue";
-// Main menu open/close
-let isShow = ref(true)
-// Sub menu open/close
-let isOpen = ref(false)
+import {defineComponent} from "vue";
+import axios from "axios";
+
+export default defineComponent({
+  components: {NotificationIcon,
+    NaviAccordionSettings,
+    ViewLogsIcon,
+    ChangePasswordIcon,
+    SendToApiIcon,
+    ArmSettingsIcon,
+    DatabaseIcon,
+    HistoryIcon,
+    HomeIcon,
+    CloseMenuIcon
+  },
+  data() {
+    return {
+      // Main menu open/close
+      isShow: ref(true),
+      // Sub menu open/close
+      isOpen: ref(false),
+      // Notification count
+      notifyCount: ref(0),
+      arm_API: this.armapi
+    }
+  },
+  mounted() {
+    let refreshList = setInterval(this.refreshNotes, 5000)
+    this.$nextTick(() => {
+      this.message = "No data yet....Loading please wait";
+      console.log(this.message);
+    });
+  },
+  unmounted() {
+    console.log("Clearing timers")
+    clearInterval(refreshList);
+  },
+  methods: {
+    refreshNotes: function () {
+      console.log("Timer" + Math.floor(Math.random() * (25)) + 1)
+      axios
+          .get(this.arm_API + '/get_notifications').then((response) => {
+        console.log(response.data);
+        this.notifyCount = response.data.length
+        //response.data
+      }, (error) => {
+        console.log(error);
+      });
+      return this
+    }
+  }
+})
 </script>
 <template>
   <nav>
@@ -26,6 +74,7 @@ let isOpen = ref(false)
       <router-link class="rounded" to="/notifications" title="View Notifications">
         <div class="rounded nav-icon">
           <NotificationIcon/>
+          <span v-show="notifyCount > 0" class="badge badge-light">{{ notifyCount }}</span>
         </div>
       </router-link>
     </div>

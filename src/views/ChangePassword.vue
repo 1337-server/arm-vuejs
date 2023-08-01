@@ -14,7 +14,6 @@ export default defineComponent({
         old_password: "",
         new_password: ""
       },
-      jsoncomments: [],
       arm_API: this.armapi,
       wasError: false,
       message: ""

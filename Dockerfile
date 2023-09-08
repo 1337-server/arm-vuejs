@@ -21,8 +21,11 @@ RUN npm run build
 COPY ./api /app/api
 RUN cd /app/api && npm install && npm run build && ls -la /app/dist && cp -r /app/dist/. /var/www/html
 RUN mkdir /etc/service/fast_api/ && echo "#!/bin/bash\ncd /app/api\nexec uvicorn main:app --host 0.0.0.0 --port 81" > /etc/service/fast_api/run && cat /etc/service/fast_api/run
-RUN mkdir -p /etc/my_init.d && echo "#!/bin/bash\nnginx" > /etc/my_init.d/armvueui.sh && cat /etc/my_init.d/armvueui.sh
+RUN mkdir -p /etc/my_init.d && echo "#!/bin/bash\nnginx" > /etc/my_init.d/armvueui.sh
+RUN echo "#!/bin/bash\nsed -i -r \"s/http:\/\/127.0.0.1:8000/\$MYSQL_IP:8890/\" /app/src/main.js" > /etc/my_init.d/fixapilink.sh && cat /etc/my_init.d/fixapilink.sh
 
+# TODO replace 'http://127.0.0.1:8000' inside main.js with the ip from mysql_ip env variable on first run
+#      This needs to be the full link to the backend fast api and not the mysql
 RUN chmod +x /etc/service/fast_api/run
 RUN chmod +x /etc/my_init.d/*.sh
 

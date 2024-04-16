@@ -9,7 +9,7 @@ FROM automaticrippingmachine/arm-dependencies:1.1.5 AS base
 WORKDIR /app
 
 # Core dependencies
-RUN apt-get update && apt-get install -y curl nginx python3-dev default-libmysqlclient-dev build-essential \
+RUN apt-get update && apt-get install -y nginx default-libmysqlclient-dev \
     && pip3 install mysql-connector-python
 
 ##Fast api

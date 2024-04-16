@@ -10,7 +10,8 @@ WORKDIR /app
 
 # Core dependencies
 RUN apt-get update && apt-get install -y nginx default-libmysqlclient-dev \
-    && pip3 install mysql-connector-python
+    && pip3 install mysql-connector-python \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
 ##Fast api
 COPY ./api /app/api

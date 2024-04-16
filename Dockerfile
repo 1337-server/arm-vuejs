@@ -19,7 +19,8 @@ RUN npm run build
 
 ##Fast api
 COPY ./api /app/api
-RUN cd /app/api && npm install && npm run build && ls -la /app/dist && cp -r /app/dist/. /var/www/html
+WORKDIR /app/api
+RUN npm install && npm run build && ls -la /app/dist && cp -r /app/dist/. /var/www/html
 RUN mkdir /etc/service/fast_api/ && echo "#!/bin/bash\ncd /app/api\nexec uvicorn main:app --host 0.0.0.0 --port 81" > /etc/service/fast_api/run && cat /etc/service/fast_api/run
 RUN mkdir -p /etc/my_init.d && echo "#!/bin/bash\nnginx" > /etc/my_init.d/armvueui.sh
 RUN echo "#!/bin/bash\nsed -i -r \"s/http:\/\/127.0.0.1:8000/\$MYSQL_IP:8890/\" /app/src/main.js" > /etc/my_init.d/fixapilink.sh && cat /etc/my_init.d/fixapilink.sh
@@ -38,5 +39,6 @@ RUN sed -i 's/z\|=404/\/index.html/' /etc/nginx/sites-available/default
 # production stage
 EXPOSE 81
 EXPOSE 80
+WORKDIR /app/api
 CMD ["/sbin/my_init"]
 #CMD ["nginx", "-g", "daemon off;"]
